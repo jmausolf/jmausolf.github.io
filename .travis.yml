@@ -1,0 +1,10 @@
+language: ruby
+rvm:
+- 1.9.3
+script: bundle exec jekyll build
+install: bundle install
+after_success: disable_parallel_processing=true bundle exec s3_website push --headless
+env:
+  global:
+  - secure: aqMj93DsysHVIxS0y0HzJQNKws1dzhuWDovdnBYWS+elqbB9si8DHcZs0eyZR3optmKI0snNBQw2x+bM8HtmtSJs8ygitwgQ7eoiNQV8zOszX0mPq5Da09OFs/aXlhfDM5lU1GIsdzlM0Lz1dSU2bnrWz5JPaLTGebfpb8ZH/GU=
+  - secure: glXNtiopOeDNAaxzLuI24LlSK9jtcYcjA1+znbjnck4abpHcdWHuqr8rxymrRnBFTysZO0TtsVKj33tvnxENXt3RMFrkFVKqTPIiL5LHsj4RRFJFo6fs3mzt/Le+9noke42uHpOduSXcrFY++Zwqyore88TfUEPEszZlcSrSU0k=

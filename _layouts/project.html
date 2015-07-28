@@ -1,0 +1,76 @@
+---
+published: true
+layout: default
+---
+
+<div id="project-page" class="row section">
+
+        <!-- Project title -->
+    <div class="project-title">
+        <h3 id="{{ page.slug }}" >
+
+          
+
+          <!-- Project name -->
+          {{ page.project }}
+
+        </h3>
+    </div>
+        <!-- Partner logos -->
+        <div class="span4">
+        	<div class="project-logo">
+            {% for img in page.img %}
+              <!-- Fetch the right image link as you loop through partner logos -->
+              <a href="{{ page.website[forloop.index0] }}">            
+              <img src="/img/partners/{{ img }}">
+              </a>
+            {% endfor %}
+        
+            <!-- Blog post, doc, code -->
+          {% if page.blog-post %}
+            <a href="{{ page.blog-post }}" class="btn btn-huge btn-danger btn-block btn-embossed">
+              Blog post: overview of problem and solution</a>
+          {% endif %}
+
+          {% if page.wiki %}
+            <a href="{{ page.wiki }}" class="btn btn-huge btn-success btn-block btn-embossed">
+              Report: in-depth, technical documentation</a>
+             {% endif %}
+
+          {% if page.repo %}  
+            <a href="{{ page.repo }}" class="btn btn-huge btn-info btn-block btn-embossed">
+              Code: open source code on Github</a>
+          {% endif %}
+      		
+      	  {% if page.data %}
+            <a href="{{ page.data }}" class="btn btn-huge btn-warning btn-block btn-embossed">
+              Data: open dataset for download</a>
+          {% endif %}
+
+      	  {% if page.demo %}
+             <a href="{{ page.demo }}" class="btn btn-huge btn-primary btn-block btn-embossed">
+              Demo: interactive application from project</a>
+           {% endif %}
+
+          {% if page.paper %}
+             <a href="{{ page.paper }}" class="btn btn-huge btn-block btn-embossed">
+              Research Paper</a>
+           {% endif %}
+           
+       	  </div>
+
+        </div>
+
+        <!-- Project description -->
+        <div class="span8">
+
+          <!-- Blurb -->
+          <div class="project-blurb">
+          {{ page.content }}
+      	  </div>
+
+          
+        </div>
+
+
+</div>
