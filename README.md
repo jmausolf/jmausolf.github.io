@@ -1,7 +1,7 @@
-DSSG Website
+Joshua Mausolf Website
 ==============
 
-This is the [website](http://dssg.github.io) for the Data Science for Social Good program. 
+This is the [website](http://jmausolf.github.io) for Joshua Mausolf. 
 
 It's built with [Jekyll](http://jekyllrb.com), a simple blogging tool that generates static html files, 
 and uses [Twitter bootstrap](http://twitter.github.com/bootstrap/) for look and feel.
