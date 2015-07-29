@@ -21,7 +21,7 @@ img {
 }
 
 a {
-	color: #E7746F;
+	color: #428bca;
 }
 
 a:hover {
@@ -191,6 +191,18 @@ textarea.form-control {
 	outline: inherit !important;
 }
 
+.btn-custom-color {
+	color: #428bca;
+}
+.btn-custom-color {
+	color: #428bca;
+	text-transform: uppercase;
+}
+.btn-custom-color:hover,
+.btn-custom-color > .btn:hover{
+	color: #000;
+}
+
 /* Button size */
 
 .btn-lg,
@@ -198,7 +210,7 @@ textarea.form-control {
 	padding: 10px 25px;
 	font-size: 13px;
     background: rgba(17, 17, 17, 0.8);
-    color: #fff;
+    color: #000;
 }
 .btn-lg:hover,
 .btn-group-lg > .btn:hover{
@@ -552,7 +564,7 @@ textarea.form-control {
 .navbar-custom .navbar-nav > li.active a {
 	background: none;
 	outline: 0;
-	color: #E7746F;
+	color: 	#428bca;
 }
 
 .navbar-custom .navbar-brand {
