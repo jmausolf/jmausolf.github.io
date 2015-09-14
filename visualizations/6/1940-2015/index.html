@@ -110,22 +110,9 @@
                         <div class="calltoaction-decription wow slideInRight" data-wow-delay=".3s">
                         Visualization created with Gephi.<br>
 
-                        <!--document.write("This page is located at: "+document.URL);-->
-
+                        <!--Dynamic Javascript to Write the Correct Year As Part of Graph Title-->
                         <script type="text/javascript">
-                        // -->
-
-                          document.write("- Year : "+window.location.pathname.split('/')[4]+" -");
-
-                        </script>
-
-                        <script type="text/javascript">
-                        // -->
-
-                          document.write("- Year : "+window.location.pathname.split('/')[2]+" -");
-                          document.write("- Year : "+window.location.pathname.split('/')[3]+" -");
-
-
+                          document.write("- "+window.location.pathname.split('/')[3]+" -");
                         </script>
 
                         </div>
