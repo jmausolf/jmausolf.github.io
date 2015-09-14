@@ -185,3 +185,5 @@ do
   cd ..
 
 done
+
+cp -f master_index.html index.html
