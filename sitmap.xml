@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="https://d3qi0qp55mx5f5.cloudfront.net/www/i/misc/maroon-shield.png"
+
+    <url>
+      <loc>http://jmausolf.github.io/</loc>
+    </url>
+    <url>
+      <loc>http://jmausolf.github.io/index.html</loc>
+      <url:caption>Home</url:caption>
+    </url>
+    <url>
+      <loc>http://jmausolf.github.io/cv/Vitae-Joshua_G._Mausolf.pdf</loc>
+      <url:caption>CV</url:caption>
+    </url>
+    <url>
+      <loc>http:github.com/jmausolf</loc>
+      <url:caption>GitHub</url:caption>
+    </url>
+    <url>
+      <loc>http://jmausolf.github.io/visualizations/</loc>
+      <url:caption>Visualizations</url:caption>
+    </url>
+    <url>
+      <loc>http://sociology.uchicago.edu/people/grad_students/JoshuaMausolf.shtml</loc>
+      <url:caption>University Web Page</url:caption>
+    </url>
+
+</urlset>
