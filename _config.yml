@@ -1,6 +1,6 @@
 port:  5000
- prose:
- 	siteurl: "http://jmausolf.github.io"
+# prose:
+# 	siteurl: "http://jmausolf.github.io"
 markdown: kramdown
 name: Joshua Mausolf - Data Scientist
 description: Homepage
