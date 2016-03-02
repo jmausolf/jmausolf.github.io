@@ -13,144 +13,6 @@
  * Slider
 /* ---------------------------------------------- */
 
-.slider {
-    background-color: #fff;
-    box-shadow: inset 0 0 2px hsla(0,0%,0%,.2),
-                0 3px 1px hsla(0,0%,100%,.75),
-                0 -1px 1px 2px hsla(0,0%,0%,.1);
-    height: 15em;
-    left: 50%;
-    margin: -8em -13em;
-    padding: .5em;
-    position: absolute;
-    top: 50%;
-    width: 25em;
-}
-.slider:before {
-    background-color: #22130c;
-    bottom: -2.5em;
-    box-shadow: inset 0 1px 1px 1px hsla(0,0%,100%,.2),
-                inset 0 -2px 1px hsla(0,0%,0%,.4),
-                0 5px 50px hsla(0,0%,0%,.25),
-                0 20px 20px -15px hsla(0,0%,0%,.2),
-                0 30px 20px -15px hsla(0,0%,0%,.15),
-                0 40px 20px -15px hsla(0,0%,0%,.1);
-    content: '';
-    left: -2.5em;
-    position: absolute;
-    right: -2.5em;
-    top: -2.5em;
-    z-index: -1;
-}
-.slider:after {
-    background-color: #fff5e5;
-    bottom: -1.5em;
-    box-shadow: 0 2px 1px hsla(0,0%,100%,.2),
-                0 -1px 1px 1px hsla(0,0%,0%,.4),
-                inset 0 2px 3px 1px hsla(0,0%,0%,.2),
-                inset 0 4px 3px 1px hsla(0,0%,0%,.2),
-                inset 0 6px 3px 1px hsla(0,0%,0%,.1);
-    content: '';
-    left: -1.5em;
-    position: absolute;
-    right: -1.5em;
-    top: -1.5em;
-    z-index: -1;
-}
-.slider li {
-    box-shadow: 0 -1px 0 2px hsla(0,0%,0%,.03);
-    list-style: none;
-    position: absolute;
-}
-.slider input {
-    display: none;
-}
-.slider label {
-    background-color: #111;
-    background-image: linear-gradient(transparent, hsla(0,0%,0%,.25));
-    border: .2em solid transparent;
-    bottom: .5em;
-    border-radius: 100%;
-    cursor: pointer;
-    display: block;
-    height: .5em;
-    left: 24em;
-    opacity: 0;
-    position: absolute;
-    transition: .25s;
-    width: .5em;
-    visibility: hidden;
-    z-index: 10;
-}
-.slider label:after {
-    border-radius: 100%;
-    bottom: -.2em;
-    box-shadow: inset 0 0 0 .2em #111,
-                inset 0 2px 2px #000,
-                0 1px 1px hsla(0,0%,100%,.25);
-    content: '';
-    left: -.2em;
-    position: absolute;
-    right: -.2em;
-    top: -.2em;
-}
-.slider:hover label {
-    opacity: 1;
-    visibility: visible;
-}
-.slider input:checked + label {
-    background-color: #fff;
-}
-.slider:hover li:nth-child(1) label {
-    left: .5em;
-}
-.slider:hover li:nth-child(2) label {
-    left: 2em;
-}
-.slider:hover li:nth-child(3) label {
-    left: 3.5em;
-}
-.slider:hover li:nth-child(4) label {
-    left: 5em;
-}
-.slider img {
-    height: 15em;
-    opacity: 0;
-    transition: .25s;
-    width: 25em;
-    vertical-align: top;
-    visibility: hidden;
-}
-.slider li input:checked ~ img {
-    opacity: 1;
-    visibility: visible;
-    z-index: 10;
-}
-
-
-@keyframes slidy {
-0% { left: 0%; }
-20% { left: 0%; }
-25% { left: -100%; }
-45% { left: -100%; }
-50% { left: -200%; }
-70% { left: -200%; }
-75% { left: -300%; }
-95% { left: -300%; }
-100% { left: -400%; }
-}
-
-@-webkit-keyframes slidy {
-0% { left: 0%; }
-20% { left: 0%; }
-25% { left: -100%; }
-45% { left: -100%; }
-50% { left: -200%; }
-70% { left: -200%; }
-75% { left: -300%; }
-95% { left: -300%; }
-100% { left: -400%; }
-}
 
 body { margin: 0; } 
 div#slider { overflow: hidden; }
@@ -402,10 +264,15 @@ textarea.form-control {
 }
 
 .pfblock2 {
-	padding-top: 150px;
+	padding-top: 0px;
 	padding-bottom: 0px;
 	margin-bottom: 5px;
+}
 
+.pfblock3 {
+	padding-top: 25%;
+	padding-bottom: 0%;
+	margin-bottom: 5%;
 }
 
 #428bca
@@ -815,13 +682,71 @@ textarea.form-control {
 	border-radius: 50%;
 	height: 50px;
 	width: 50px;
-	margin-left: -15px;
 	display: block;
 	z-index: 10;
     text-align: center;
 }
 
+.scroll-down2 {
+	background-color: rgba(135, 135, 135, 0.5);
+	position: absolute;
+	border: 2px solid #fff;
+	height: 35px;
+	width: 35px;
+	display: block;
+	z-index: 999;
+    text-align: center;
+	top: 45%;
+	right: 2em;
+}
+
+.scroll-down3 {
+	background-color: rgba(135, 135, 135, 0.5);
+	position: relative;
+	border: 2px solid #fff;
+	height: 35px;
+	width: 35px;
+	display: block;
+    text-align: center;
+	top: 10em;
+	left: 2em;
+}
+
 .scroll-down span{
+    position: relative;
+    color: #fff;
+    -webkit-animation-name: drop;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-delay: 0s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-play-state: running;
+	animation-name: drop;
+	animation-duration: 1s;
+	animation-timing-function: linear;
+	animation-delay: 0s;
+	animation-iteration-count: infinite;
+	animation-play-state: running;
+}
+
+.scroll-down2 span{
+    position: relative;
+    color: #fff;
+    -webkit-animation-name: drop;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-delay: 0s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-play-state: running;
+	animation-name: drop;
+	animation-duration: 1s;
+	animation-timing-function: linear;
+	animation-delay: 0s;
+	animation-iteration-count: infinite;
+	animation-play-state: running;
+}
+
+.scroll-down3 span{
     position: relative;
     color: #fff;
     -webkit-animation-name: drop;
