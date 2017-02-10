@@ -1,0 +1,59 @@
+---
+title: "Syllabus"
+---
+
+```{r include = FALSE}
+library(tidyverse)
+library(readxl)
+library(lubridate)
+library(stringr)
+```
+
+```{r include = FALSE}
+# import excel table with topics
+rawdat <- read_excel(file.path("course_admin", "schedule.xlsx"))
+
+# clean up table and extract date info
+cdat <- rawdat %>%
+  mutate(link_it = as.logical(link_it),
+         topic = ifelse(is.na(topic), "", topic),
+         notes = sprintf("%s: %s", cm, topic))
+
+# identify links to course modules
+cmdat <- data_frame(html = list.files(pattern = '^(cm|setup|git|lab).*html$'))
+cmdat <- cmdat %>% mutate(cm = str_extract(html, "(cm|setup|git|lab)[0-9]+"))
+cdat <- cdat %>% left_join(cmdat)
+
+# add links to notes column
+cdat$notes[cdat$link_it] <-
+  str_replace(cdat$notes[cdat$link_it],
+              "((cm[0-9]{3})|((setup|git|lab)[0-9]{2}))", '<a href="LINK">\\1</a>')
+cdat$notes[cdat$link_it] <-
+  str_replace(cdat$notes[cdat$link_it], "LINK", cdat$html[cdat$link_it])
+```
+
+```{r results = 'asis', echo = FALSE, message = FALSE}
+cdat %>%
+  select(cm, date, notes) %>%
+  mutate(cm = str_extract(cm, "[:alpha:]+")) %>%
+  spread(cm, notes) %>%
+  mutate(lab = ifelse(is.na(lab), "", lab),
+         date = sprintf("%s %s %s",
+                        wday(date, label = TRUE),
+                        month(date, label = TRUE),
+                        day(date))) %>%
+  knitr::kable(col.names = c("Date", "Topic", "Lab"))
+```
+
+## Homework
+
+* [Homework 01: Edit README.md](hw01_edit-README.html)
+* [Homework 02: Exploring and wrangling data](hw02-explore-wrangle-data.html)
+* [Homework 03: Programming in R](hw03-programming.html)
+* [Homework 04: Building an analysis pipeline](hw04-analysis-pipeline.html)
+* [Homework 05: Analyzing the `gapminder` dataset using Python](hw05-python-data-analysis.html)
+* [Homework 06: Collecting data from the web](hw06-webdata.html)
+* [Homework 07: Analyzing text data](hw07-text_analysis.html)
+* [Homework 08: Statistical learning](hw08-statistical_learning.html)
+* ~~Homework 09:~~  Happy Thanksgiving!
+* [Homework 10: Build a Shiny application](hw10-shiny.html)

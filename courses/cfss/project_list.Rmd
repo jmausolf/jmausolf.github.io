@@ -1,0 +1,44 @@
+---
+title: "List of projects for fall 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo = FALSE, message = FALSE}
+library(tidyverse)
+library(stringr)
+library(knitr)
+
+# roster of students with github handles
+students <- tribble(
+  ~Name, ~github, ~project_name,
+  'Rishi Arora', 'rishigarora', 'A Brief Inquiry into Faculty Activism',
+  'Jongyoon Baik', 'JongyoonBaik', 'The Establishment of Law as a Social Norm in China',
+  'Rita Biagioli & Carly Offidani-Bertrand', 'futureofmaya', NA,
+  'Jonathan Camacho', 'jonathanecm', NA,
+  'ChihYu Chiang & Shun Wang', 'ChihYuChiang', "Sentiments' Effect on Different Game Experiences",
+  'Emily Forden', 'EmilyForden', NA,
+  'Tong Ju & Yuhao Zhuang', 'jtbeyond', "Authoritarian Discourses of China during Social Movements in the 1980s",
+  'Bobae Kang', 'bobaekang', 'Exploring Complementary Effects of Bike-Sharing System on Public Transit Ridership in Chicago',
+  'Jordan Martin', 'JordanAMartin', 'Infant Social Attention During Goal-Directed Action',
+  'Brian Pennington', 'brianp', 'I Know Words, I Have The Best Words: Text Analysis of 2016 Campaign Speeches',
+  'Haitong Xu', 'XuHaitongUC', 'The Activity Level of Time Banks'
+)
+
+# create links and print the table
+students %>%
+  mutate(`Project website` = str_c("https://uc-cfss.github.io/fp-", github),
+         `Project repo` = str_c("https://github.com/uc-cfss/fp-", github)) %>%
+  # if project_name exists, change Project Website to use that name
+  mutate(`Project website` = if_else(!is.na(project_name),
+                                     str_c("[", project_name, "](", `Project website`, ")"),
+                                     `Project website`)) %>%
+  # fix Emily's link
+  mutate(`Project website` = if_else(Name == 'Emily Forden', "[Sentiments in Livy](https://emilyforden.shinyapps.io/fp-emilyforden/)", `Project website`),
+         `Project website` = if_else(Name == 'Rita Biagioli & Carly Offidani-Bertrand', "[Tweeting About Immigration](https://ritabiagioli.shinyapps.io/finalproject2/)", `Project website`)) %>%
+  select(-github, -project_name) %>%
+  kable()
+```

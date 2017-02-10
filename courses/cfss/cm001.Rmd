@@ -1,0 +1,32 @@
+---
+title: "Introduction to computing for the social sciences"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+# cm001 - September 26, 2016
+
+## Overview
+
+* Introduce myself
+* Identify major course objectives
+* Identify course logistics
+* Introduce basic principles of data science workflow and programming
+* Explain how to get started in R
+
+## Slides and links
+
+* [Slides](extras/cm001_slides.html)
+
+## To do for Wednesday
+
+* [Complete the petition to enroll in this course](https://goo.gl/forms/qtck5uInx3560k2H2)
+* [Install and setup software](setup00.html)
+    * At minimum make sure you install R and RStudio. We will be using both in class on Wednesday.
+    * Also [install](setup03.html#add-on_libraries) the [`gapminder`](https://cran.r-project.org/web/packages/gapminder/index.html) package. The command to do this is `install.packages("gapminder")`.
+* Chapters 1-4 from [R for Data Science](http://r4ds.had.co.nz/)
+* [Good Enough Practices in Scientific Computing](http://arxiv.org/abs/1609.00037) (optional, but good summary of best computing practices)
+

@@ -1,0 +1,32 @@
+---
+title: "Reproducibility in research"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+# cm008 - October 19, 2016
+
+## Overview
+
+* Review how to post code in a Github issue
+* Review the importance of reproducibility in scientific research
+* Define a data pipeline
+* Demonstrate how to structure a reproducible project in R
+* Hammer home how to use R Markdown documents
+
+## Slides and links
+
+* [Slides](extras/cm008_slides.html)
+* [Example pipeline](https://github.com/uc-cfss/pipeline-example)
+
+## To do for Monday
+
+* [Start homework 4](hw04-analysis-pipeline.html)
+* Make sure [Python is installed and working](setup02.html)
+* Read chapters 1-3, 5 from [Think Python](http://proquestcombo.safaribooksonline.com.proxy.uchicago.edu/book/programming/python/9781449332006)
+    * Ignore recursive functions in Chapter 5 - just focus on conditional expressions
+
+
