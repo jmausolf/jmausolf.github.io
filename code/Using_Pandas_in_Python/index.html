@@ -1,4 +1,93 @@
 <!DOCTYPE html>
+
+
+<!--TUTORIALS TEMPLATE HEADER--><!--TUTORIALS TEMPLATE HEADER-->
+
+    <head>
+    	<!--METADATA-->
+     	<meta charset="UTF-8">
+     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+     	<meta name="description" content="Joshua G. Mausolf is a Ph.D. student and quantitative social scientist in the Department of Sociology at the University of Chicago.">
+     	<meta name="keywords" content="Joshua G. Mausolf, Joshua Mausolf, University of Chicago, Department of Sociology, Sociologists, Researchers, Computational Social Science, Computational Sociology, @Joshua_Mausolf, @jmausolf">
+     	<meta name="author" content="Joshua G. Mausolf">
+     	<meta name="twitter:title" content="Joshua G. Mausolf - Data Scientist">
+     	<meta name="twitter:card" content="summary">
+     	<meta name="twitter:site" content="@Joshua_Mausolf">
+     	<meta property="og:title" content="Joshua Gary Mausolf - Data Scientist"/>
+     	<meta property="og:image" content="https://d3qi0qp55mx5f5.cloudfront.net/www/i/misc/maroon-shield.png">
+     	<meta property="og:site_name" content="Joshua G. Mausolf - University of Chicago"/>
+     	<meta name="google-site-verification" content="bZzggcxdb06kzSBJr1305bpoA_tn_LeBaDoUi9Jm2cU" />
+
+     	<!--PAGE TITLE: MODIFY HERE-->
+     	<title>Joshua G. Mausolf - Pandas</title>
+
+
+     	<link rel="shortcut icon" href="../favicon.ico">
+     	<link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+     	<link href="../assets/css/font-awesome.min.css" rel="stylesheet" media="screen">
+     	<link href="../assets/css/simple-line-icons.css" rel="stylesheet" media="screen">
+     	<!--link href="../assets/css/animate.css" rel="stylesheet" media="screen"-->
+
+     	<!--Custom styles CSS-->
+     	<link href="../assets/css/style.css" rel="stylesheet" media="screen">
+
+
+     	<script src="../assets/js/modernizr.custom.js"></script>
+
+
+     	<link rel="stylesheet" type="text/css" href="css/style6.css" />
+     	<script type="text/javascript" src="js/modernizr.custom.86080.js"></script>
+
+    </head>
+
+
+</head>
+
+    <!-- Preloader -->
+
+	<div id="preloader">
+		<div id="status"></div>
+	</div>
+
+
+    <!-- Navigation start -->
+
+    <header class="header">
+
+        <nav class="navbar navbar-custom" role="navigation">
+
+            <div class="container">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#custom-collapse">Menu
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="http://jmausolf.github.io">Joshua Gary Mausolf</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="custom-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="https://github.com/jmausolf">Github</a></li>
+                        <li><a href="http://jmausolf.github.io/code/">Code</a></li>
+                        <li><a href="http://jmausolf.github.io/cv/Vitae-Joshua_G._Mausolf.pdf">CV</a></li>
+                        <li><a href="#footer">Contact</a></li>
+                    </ul>
+                </div>
+
+                </div>
+            </div><!-- .container -->
+        </nav>
+
+    </header>
+
+    <!-- Navigation end -->
+
+<!--END TUTORIALS TEMPLATE HEADER--><!--END TUTORIALS TEMPLATE HEADER-->
+
+
 <html>
 <head><meta charset="utf-8" />
 <title>Coding_with_Python_in_Jupyter_Notebooks</title>
@@ -128,14 +217,14 @@ div#notebook {
   div.cell {
     display: block;
     page-break-inside: avoid;
-  } 
-  div.output_wrapper { 
-    display: block;
-    page-break-inside: avoid; 
   }
-  div.output { 
+  div.output_wrapper {
     display: block;
-    page-break-inside: avoid; 
+    page-break-inside: avoid;
+  }
+  div.output {
+    display: block;
+    page-break-inside: avoid;
   }
 }
 </style>
@@ -6162,7 +6251,7 @@ oSdxbXdV90kAAAAASUVORK5CYII=
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span class="n">ggplot</span><span class="p">(</span><span class="n">chicago_temps</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="s">&#39;datetime&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">&#39;value&#39;</span><span class="p">))</span> <span class="o">+</span> \
     <span class="n">geom_line</span><span class="p">()</span> <span class="o">+</span> \
-    <span class="n">ggtitle</span><span class="p">(</span><span class="s">&quot;Chicago Min, Max, and Average Temps </span><span class="se">\n</span><span class="s"> Temperature (tenths of degrees C)&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">xlab</span><span class="p">(</span><span class="s">&quot;Date&quot;</span><span class="p">)</span> 
+    <span class="n">ggtitle</span><span class="p">(</span><span class="s">&quot;Chicago Min, Max, and Average Temps </span><span class="se">\n</span><span class="s"> Temperature (tenths of degrees C)&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">xlab</span><span class="p">(</span><span class="s">&quot;Date&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -10877,5 +10966,66 @@ YII=
 </div>
     </div>
   </div>
+
+
+  <!--TUTORIALS TEMPLATE FOOTER--><!--TUTORIALS TEMPLATE FOOTER-->
+
+      <!-- Footer start -->
+
+      <footer id="footer">
+          <section id="contact">
+          <div class="container">
+              <div class="row">
+
+                  <div class="col-sm-12">
+
+                      <ul class="social-links">
+                          <li><a href="https://www.facebook.com/joshua.g.mausolf" class="wow fadeInUp"><i class="fa fa-facebook"></i></a></li>
+                          <li><a href="https://twitter.com/Joshua_Mausolf" class="wow fadeInUp" data-wow-delay=".1s"><i class="fa fa-twitter"></i></a></li>
+                          <li><a href="https://github.com/jmausolf" class="wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-github"></i></a></li>
+                          <li><a href="https://www.linkedin.com/pub/joshua-mausolf/23/43a/258" class="wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-linkedin-square"></i></a></li>
+                          <li><a href="https://chicago.academia.edu/JoshuaMausolf" class="wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-plus-square"></i></a></li>
+                          <li><a href="https://sociology.uchicago.edu/directory/joshua-mausolf" class="wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-institution"></i></a></li>
+                          <li><a href="mailto:jmausolf@uchicago.edu" class="wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-envelope"></i></a></li>
+                          <li><a href="https://mail.google.com/mail/?view=cm&fs=1&to=jmausolf@uchicago.edu" class="wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-google"></i></a></li>
+                      </ul>
+
+                      <p class="copyright">
+                          <a href="http://jmausolf.github.io" class="btn btn-link"> © Joshua Gary Mausolf</a>
+                      </p>
+
+                  </div>
+
+              </div>
+          </div>
+      </footer>
+
+      <!-- Footer end -->
+
+      <!-- Scroll to top -->
+
+      <div class="scroll-up">
+          <a href="#graph"><i class="fa fa-angle-up"></i></a>
+      </div>
+
+      <!-- Scroll to top end-->
+
+      <!-- Javascript files -->
+
+      <!--script src="../assets/js/jquery-1.11.1.min.js"></script-->
+      <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+      <script src="../assets/js/jquery.parallax-1.1.3.js"></script>
+      <script src="../assets/js/imagesloaded.pkgd.js"></script>
+      <script src="../assets/js/jquery.sticky.js"></script>
+      <script src="../assets/js/smoothscroll.js"></script>
+      <script src="../assets/js/wow.min.js"></script>
+      <script src="../assets/js/jquery.easypiechart.js"></script>
+      <script src="../assets/js/waypoints.min.js"></script>
+      <script src="../assets/js/jquery.cbpQTRotator.js"></script>
+      <script src="../assets/js/custom.js"></script>
+
+   <!--END TUTORIALS TEMPLATE FOOTER --><!--END TUTORIALS TEMPLATE FOOTER-->
+
+
 </body>
 </html>

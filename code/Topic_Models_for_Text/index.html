@@ -1,5 +1,92 @@
 <!DOCTYPE html>
 
+<!--TUTORIALS TEMPLATE HEADER--><!--TUTORIALS TEMPLATE HEADER-->
+
+    <head>
+    	<!--METADATA-->
+     	<meta charset="UTF-8">
+     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+     	<meta name="description" content="Joshua G. Mausolf is a Ph.D. student and quantitative social scientist in the Department of Sociology at the University of Chicago.">
+     	<meta name="keywords" content="Joshua G. Mausolf, Joshua Mausolf, University of Chicago, Department of Sociology, Sociologists, Researchers, Computational Social Science, Computational Sociology, @Joshua_Mausolf, @jmausolf">
+     	<meta name="author" content="Joshua G. Mausolf">
+     	<meta name="twitter:title" content="Joshua G. Mausolf - Data Scientist">
+     	<meta name="twitter:card" content="summary">
+     	<meta name="twitter:site" content="@Joshua_Mausolf">
+     	<meta property="og:title" content="Joshua Gary Mausolf - Data Scientist"/>
+     	<meta property="og:image" content="https://d3qi0qp55mx5f5.cloudfront.net/www/i/misc/maroon-shield.png">
+     	<meta property="og:site_name" content="Joshua G. Mausolf - University of Chicago"/>
+     	<meta name="google-site-verification" content="bZzggcxdb06kzSBJr1305bpoA_tn_LeBaDoUi9Jm2cU" />
+
+     	<!--PAGE TITLE: MODIFY HERE-->
+     	<title>Joshua G. Mausolf - Topic Models</title>
+
+
+     	<link rel="shortcut icon" href="../favicon.ico">
+     	<link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+     	<link href="../assets/css/font-awesome.min.css" rel="stylesheet" media="screen">
+     	<link href="../assets/css/simple-line-icons.css" rel="stylesheet" media="screen">
+     	<!--link href="../assets/css/animate.css" rel="stylesheet" media="screen"-->
+
+     	<!--Custom styles CSS-->
+     	<link href="../assets/css/style.css" rel="stylesheet" media="screen">
+
+
+     	<script src="../assets/js/modernizr.custom.js"></script>
+
+
+     	<link rel="stylesheet" type="text/css" href="css/style6.css" />
+     	<script type="text/javascript" src="js/modernizr.custom.86080.js"></script>
+
+    </head>
+
+
+</head>
+
+    <!-- Preloader -->
+
+	<div id="preloader">
+		<div id="status"></div>
+	</div>
+
+
+    <!-- Navigation start -->
+
+    <header class="header">
+
+        <nav class="navbar navbar-custom" role="navigation">
+
+            <div class="container">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#custom-collapse">Menu
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="http://jmausolf.github.io">Joshua Gary Mausolf</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="custom-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="https://github.com/jmausolf">Github</a></li>
+                        <li><a href="http://jmausolf.github.io/code/">Code</a></li>
+                        <li><a href="http://jmausolf.github.io/cv/Vitae-Joshua_G._Mausolf.pdf">CV</a></li>
+                        <li><a href="#footer">Contact</a></li>
+                    </ul>
+                </div>
+
+                </div>
+            </div><!-- .container -->
+        </nav>
+
+    </header>
+
+    <!-- Navigation end -->
+
+<!--END TUTORIALS TEMPLATE HEADER--><!--END TUTORIALS TEMPLATE HEADER-->
+
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -300,47 +387,47 @@ positional arguments:
                    @ text_tfidf_std       | TFIDF Vectorizer (for text)
                    @ text_tfidf_custom    | TFIDF Vectorizer with Custom Tokenizer (for text)
                    @ text_count_std       | Count Vectorizer
-                   
+
                    @ tweet_tfidf_std      | TFIDF Vectorizer (for tweets)
                    @ tweet_tfidf_custom   | TFIDF Vectorizer with Custom Tokenizer (for tweets)
-                   
+
   topic_clf        Select the desired topic model classifier (clf)
                    @ lda     | Topic Model: LatentDirichletAllocation (LDA)
                    @ nmf     | Topic Model: Non-Negative Matrix Factorization (NMF)
                    @ pca     | Topic Model: Principal Components Analysis (PCA)
-                   
+
   n_topics         Select the number of topics to return (as integer)
                    Note: requires n &gt;= number of text files or tweets
-                   
+
                    Consider the following examples:
-                   
+
                    @ 10     | Example: Returns 5 topics
                    @ 15     | Example: Returns 10 topics
-                   
+
   n_top_terms      Select the number of top terms to return for each topic (as integer)
                    Consider the following examples:
-                   
+
                    @ 10     | Example: Returns 10 terms for each topic
                    @ 15     | Example: Returns 15 terms for each topic
-                   
+
   req_ngram_range  Select the requested 'ngram' or number of words per term
                    @ NG-1:  | ngram of length 1, e.g. &quot;pay&quot;
                    @ NG-2:  | ngram of length 2, e.g. &quot;fair share&quot;
                    @ NG-3:  | ngram of length 3, e.g. &quot;pay fair share&quot;
-                   
+
                    Consider the following ngram range examples:
-                   
+
                    @ [1, 2] | Return ngrams of lengths 1 and 2
                    @ [2, 5] | Return ngrams of lengths 2 through 5
-                   
+
   file_path        Select the desired file path for the data
-                   
+
                    Consider the following ngram range examples:
-                   
+
                    @ data/twitter      | Uses data in the data/twitter subdirectory
                    @ data/president    | Uses data in the data/president subdirectory
                    @ .                 | Uses data in the current directory
-                   
+
 
 optional arguments:
   -h, --help       show this help message and exit
@@ -488,6 +575,66 @@ $(document).ready(function () {
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
+
+
+<!--TUTORIALS TEMPLATE FOOTER--><!--TUTORIALS TEMPLATE FOOTER-->
+
+    <!-- Footer start -->
+
+    <footer id="footer">
+        <section id="contact">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-12">
+
+                    <ul class="social-links">
+                        <li><a href="https://www.facebook.com/joshua.g.mausolf" class="wow fadeInUp"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://twitter.com/Joshua_Mausolf" class="wow fadeInUp" data-wow-delay=".1s"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://github.com/jmausolf" class="wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-github"></i></a></li>
+                        <li><a href="https://www.linkedin.com/pub/joshua-mausolf/23/43a/258" class="wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-linkedin-square"></i></a></li>
+                        <li><a href="https://chicago.academia.edu/JoshuaMausolf" class="wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-plus-square"></i></a></li>
+                        <li><a href="https://sociology.uchicago.edu/directory/joshua-mausolf" class="wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-institution"></i></a></li>
+                        <li><a href="mailto:jmausolf@uchicago.edu" class="wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-envelope"></i></a></li>
+                        <li><a href="https://mail.google.com/mail/?view=cm&fs=1&to=jmausolf@uchicago.edu" class="wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-google"></i></a></li>
+                    </ul>
+
+                    <p class="copyright">
+                        <a href="http://jmausolf.github.io" class="btn btn-link"> © Joshua Gary Mausolf</a>
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- Footer end -->
+
+    <!-- Scroll to top -->
+
+    <div class="scroll-up">
+        <a href="#graph"><i class="fa fa-angle-up"></i></a>
+    </div>
+
+    <!-- Scroll to top end-->
+
+    <!-- Javascript files -->
+
+    <!--script src="../assets/js/jquery-1.11.1.min.js"></script-->
+    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/js/jquery.parallax-1.1.3.js"></script>
+    <script src="../assets/js/imagesloaded.pkgd.js"></script>
+    <script src="../assets/js/jquery.sticky.js"></script>
+    <script src="../assets/js/smoothscroll.js"></script>
+    <script src="../assets/js/wow.min.js"></script>
+    <script src="../assets/js/jquery.easypiechart.js"></script>
+    <script src="../assets/js/waypoints.min.js"></script>
+    <script src="../assets/js/jquery.cbpQTRotator.js"></script>
+    <script src="../assets/js/custom.js"></script>
+
+ <!--END TUTORIALS TEMPLATE FOOTER --><!--END TUTORIALS TEMPLATE FOOTER-->
+
 
 </body>
 </html>
