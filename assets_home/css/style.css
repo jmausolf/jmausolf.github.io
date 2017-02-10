@@ -14,10 +14,10 @@
 /* ---------------------------------------------- */
 
 
-body { margin: 0; } 
+body { margin: 0; }
 div#slider { overflow: hidden; }
 div#slider figure img { width: 20%; float: left; }
-div#slider figure { 
+div#slider figure {
   position: relative;
   width: 500%;
   height: 10%;
@@ -27,7 +27,7 @@ div#slider figure {
   font-size: 0;
   -webkit-animation-name: slidy;
   -keyframes-name: slidy;
-  animation: 5s slidy infinite; 
+  animation: 5s slidy infinite;
 }
 
 
@@ -229,11 +229,21 @@ textarea.form-control {
 	color: #428bca;
 }
 
+.btn-custom-color-bk {
+	color: #222;
+}
+
 .btn-lg:hover,
 .btn-group-lg > .btn:hover{
     background: rgba(17, 17, 17, 1.8);
     color: #fff;
 }
+
+.btn-md,
+.btn-group-md > .btn {
+	font-size: 13px;
+}
+
 
 .btn-sm,
 .btn-group-sm > .btn {
@@ -1001,7 +1011,7 @@ figure.effect-bubba:hover p {
 
 .cbp-qtrotator .cbp-qtcontent.cbp-qtcurrent,
 .no-js .cbp-qtrotator .cbp-qtcontent {
-	position: relative; 
+	position: relative;
 	z-index: 100;
 	pointer-events: auto;
 	opacity: 1;
@@ -1054,7 +1064,7 @@ figure.effect-bubba:hover p {
 }
 
 /* Example for media query */
-@media screen and (max-width: 30.6em) { 
+@media screen and (max-width: 30.6em) {
 
 	.cbp-qtrotator {
 		font-size: 70%;
@@ -1101,6 +1111,3 @@ figure.effect-bubba:hover p {
         margin-right: auto;
         box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 }
-
-
-
