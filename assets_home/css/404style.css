@@ -11,7 +11,7 @@
 
 body {
 	font: 300 14px/1.8 'Raleway', sans-serif;
-	color: #666;
+	color: #222;
 	overflow-x: hidden;
 }
 
@@ -175,6 +175,7 @@ textarea.form-control {
  * Custom button style
 /* ---------------------------------------------- */
 
+
 .btn {
 	font-family: Raleway, sans-serif;
 	text-transform: uppercase;
@@ -191,18 +192,6 @@ textarea.form-control {
 	outline: inherit !important;
 }
 
-.btn-custom-color {
-	color: #428bca;
-}
-.btn-custom-color {
-	color: #428bca;
-	text-transform: uppercase;
-}
-.btn-custom-color:hover,
-.btn-custom-color > .btn:hover{
-	color: #000;
-}
-
 /* Button size */
 
 .btn-lg,
@@ -210,12 +199,26 @@ textarea.form-control {
 	padding: 10px 25px;
 	font-size: 13px;
     background: rgba(17, 17, 17, 0.8);
-    color: #000;
+    color: #fff;
 }
+
+.btn-custom-color {
+	color: #428bca;
+}
+
+.btn-custom-color-bk {
+	color: #222;
+}
+
 .btn-lg:hover,
 .btn-group-lg > .btn:hover{
     background: rgba(17, 17, 17, 1.8);
     color: #fff;
+}
+
+.btn-md,
+.btn-group-md > .btn {
+	font-size: 13px;
 }
 
 .btn-sm,
@@ -237,6 +240,7 @@ textarea.form-control {
 .btn .icon-after {
 	margin-left: 6px;
 }
+
 
 /* ---------------------------------------------- /*
  * General Styles
@@ -292,6 +296,8 @@ textarea.form-control {
 	font-family: Raleway, "Times New Roman", Times, sans-serif;
 	font-style: normal;
 	font-size: 18px;
+	text-align: justify;
+	a { color: #428bca; }
 }
 
 .pfblock-line {
@@ -371,8 +377,7 @@ textarea.form-control {
 }
 
 .home-overlay {
-    background-color: rgba(44, 62, 80, 0.3);
-    background-image: url("../images/pattern.png");
+		background-color: #222 url("../images/pattern.png");
     background-repeat: repeat;
     height: 100%;
     left: 0;
@@ -383,6 +388,7 @@ textarea.form-control {
 }
 
 .intro {
+	background-color: #222;
 	position: absolute;
 	width: 100%;
 	top: 50%;
@@ -398,9 +404,11 @@ textarea.form-control {
 
 .intro h1{
     font-weight: 800;
+		color: #222
 }
 
 .start {
+	background-color: #222;
 	font-family: Raleway, "Times New Roman", Times, sans-serif;
 	font-size: 16px;
 	font-style: normal;
@@ -413,8 +421,8 @@ textarea.form-control {
 /* ---------------------------------------------- */
 
 .iconbox {
-	background: #fff;
-	border-bottom: 1px solid #d4d4d4;
+	background-color: #222;
+	border-bottom: 1px solid #222;
 	text-align: center;
 	padding: 40px 20px;
 	margin: 0 0 20px;
@@ -477,7 +485,7 @@ textarea.form-control {
 	background: #222;
 	text-align: center;
 	padding: 40px 0;
-	color: #FFF;
+	color: #222;
 }
 
 .copyright {
@@ -491,7 +499,7 @@ textarea.form-control {
 #footer span{
     animation-iteration-count: infinite;
     -webkit-animation-iteration-count: infinite;
-    color: #ff5252;
+    color: #222;
 }
 
 .social-links {
@@ -554,7 +562,7 @@ textarea.form-control {
 .navbar-custom .navbar-nav .dropdown-menu > li > a {
 	font-size: 11px;
 	letter-spacing: 3px;
-	color: #222;
+	color: #428bca;
 }
 
 .navbar-custom .nav li.active,
