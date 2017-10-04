@@ -1,0 +1,130 @@
+---
+title: "Using Git in Bash - Forking, Branching, Pull Requests"
+author: "Joshua Gary Mausolf"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+# Prerequisites
+
+This guide assumes some familiarity with using Git with Bash and the basics of cloning, adding, and pushing to your own repository. If these are unfamiliar, please review the following resources:
+
+* [Tutorial: Introduction to Using Git in Bash](http://jmausolf.github.io/code/intro_git/)
+* [Git Basics](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository)
+
+# Pull Requests
+
+When using Git, pull requests are a process used for contributing code to a collective or group repository. There are two specific situations from which a pull request generally occurs: [forking](https://guides.github.com/activities/forking/) and [branching](https://github.com/blog/1377-create-and-delete-branches).
+
+## Pull Requests - Forking
+
+Any user on Github with public access to a repository can create a fork. In essence, a fork is a time-dated version of another user's repository. It will appear under your repository as a forked-repo from another user. You would clone this forked-repo.
+
+### Process
+
+1. [**Go to Github and Fork the Desired Repository**](https://guides.github.com/activities/forking/)
+2. **Go to *Your* Github Account and Copy the Forked Repository Link**
+
+3. **Go to the terminal and do the following steps**
+
+```{r, eval=FALSE, engine = 'bash'}
+git clone LINK_TO_FORKED_REPOSITORY
+
+#Now Make Changes to Your Code, Files, or Folders
+```
+
+Unless you have done step #1-3 in a matter of seconds, there is considerable chance that the upstream code, that is the code from the original repository you forked, has changed. If that is the case, you should update your fork before committing and creating a pull request. Otherwise, you risk having merge conflicts (*discrepancies between your code and the original repository that cannot automatically be resolved*).
+
+4. [**Sync Your Local Fork**](https://help.github.com/articles/syncing-a-fork/) 
+
+```{r, eval=FALSE, engine = 'bash'}
+git remote add upstream LINK_TO_ORIGINAL_REPOSITORY
+git fetch upstream
+git checkout master
+git merge upstream/master -m "example message, syncing fork"
+```
+
+
+* Note: If no changes have been made, you can simply use `git merge upstream/master`
+* Note: If changes have been made and you omit `-m "message"` the default editor will open (typically vim) and require you enter a message. By default, you can write and escape from vim with `esc`, `shift+':'`, `wq`, `enter`. If you enter a message and none is needed, it will simply ignore your message.
+
+```{r, eval=FALSE, engine = 'bash'}
+
+#If changes exist, retest new code to ensure it works
+
+git add NAME_OF_FILES
+git commit -m "Comment describing what file does or what change you made"
+git push origin master 
+```
+
+5. [**Go to Github and Submit a Pull Request**](https://help.github.com/articles/creating-a-pull-request/)
+
+<br><br>
+
+**NOTE:**
+
+In the future, if you would like to make more changes to your fork, you should sync your local copy before attempting to make new changes:
+
+[**Re-Sync Your Local Fork**](https://help.github.com/articles/syncing-a-fork/) 
+
+```{r, eval=FALSE, engine = 'bash'}
+git fetch upstream
+git checkout master
+git merge upstream/master
+```
+
+<br><br>
+<br><br>
+
+## Pull Requests - Branching
+
+You might encounter pull requests when working in industry, wherein they will typically follow from a [branching workflow](https://guides.github.com/introduction/flow/).
+
+Note: You can typically branch from any repository you own or any repository you have approved access to, as would be the case when working in industry. As a non-authorized user, while you can see the different branches, for example, on a Facebook repository, you do not have the option to create a new branch. You could, however, *fork* the repository and contribute using that workflow (see above).
+
+### Process
+
+1. [**Go to the Repository on Github and Create a New Branch**](https://github.com/blog/1377-create-and-delete-branches)
+
+2. **Go to the terminal and do the following steps**
+
+```{r, eval=FALSE, engine = 'bash'}
+git clone LINK_TO_REPOSITORY
+git checkout -b NAME_OF_YOUR_NEW_BRANCH
+
+#Now Make Changes to Your Code or Files
+```
+
+3. **Update Your Branch before Committing**
+
+If you are working in a collaborative environment, other developers are likely also working on the same branch. To ensure your changes are compatible with the latest updates, you should pull prior to adding and committing new changes.
+
+```{r, eval=FALSE, engine = 'bash'}
+git pull origin NAME_OF_YOUR_NEW_BRANCH
+
+#If changes exist, retest new code to ensure it works
+
+git add NAME_OF_FILES
+git commit -m "Comment describing what file does or what change you made"
+git push origin NAME_OF_YOUR_NEW_BRANCH
+```
+
+
+4. [**Go to Github and Submit a Pull Request**](https://help.github.com/articles/creating-a-pull-request/)
+
+<br><br>
+
+**NOTE:**
+
+Recommended branching philosophy is to use a branch for small portions of code. After you submit a pull request, ideally the branch is merged and closed. If you are working on a large development project, you might create a branch `updated_master_new_code_version` and create branches from that branch (not master) for developing small feature changes in the code. New changes to the development version are each handled by branches from the development version.
+
+<br><br>
+<br><br>
+
+---
