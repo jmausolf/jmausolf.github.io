@@ -1,0 +1,5 @@
+#Command to test various screen sizes
+
+#CMD+OPTION+P+R 
+
+#awesome
