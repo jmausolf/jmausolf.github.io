@@ -18,7 +18,7 @@
       <meta property="og:site_name" content="Joshua Mausolf - University of Chicago"/>
       <meta name="google-site-verification" content="bZzggcxdb06kzSBJr1305bpoA_tn_LeBaDoUi9Jm2cU" />
 
-      <title>Joshua Mausolf - Congressional Record Analysis</title>
+      <title>Joshua Mausolf - Occupy the Government</title>
 
 
 
@@ -35,7 +35,7 @@
 
 
         <script src="assets/js/modernizr.custom.js"></script>
-
+        <script src="assets/js/imgviewer.js"></script>
 
         <link rel="stylesheet" type="text/css" href="css/style6.css" />
         <script type="text/javascript" src="js/modernizr.custom.86080.js"></script>
@@ -44,7 +44,9 @@
     </head>
 
 
+    <style>
 
+    </style>
 
 
 
@@ -78,13 +80,14 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="http://jmausolf.github.io">Joshua Mausolf</a>
+                    <a class="navbar-brand" href="http://jmausolf.github.io">Joshua Gary Mausolf</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="custom-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#about">About This Visualization</a></li>
-                        <li><a href="http://jmausolf.github.io/visualizations/">More Visualizations</a></li>
+                        <li><a href="#about">Project Downloads</a></li>
+                        <li><a href="https://github.com/jmausolf">Github</a></li>
+                        <li><a href="http://jmausolf.github.io/code/">Code</a></li>
                         <li><a href="http://jmausolf.github.io/cv/Vitae-Joshua_G._Mausolf.pdf">CV</a></li>
                         <li><a href="#footer">Contact</a></li>
                     </ul>
@@ -92,10 +95,7 @@
 
                 </div>
             </div><!-- .container -->
-
         </nav>
-
-
 
     </header>
 
@@ -253,13 +253,122 @@
                                         The observed relationship between Occupy arrests and congressional rhetoric is statistically significant. Using ARFIMA models to conduct time series analysis, current day arrests and arrests one day ago predict increased Congressional discussion of inequality keywords and fair share keywords. This is true while controlling for economic conditions (S&P500 and unemployment rate), public perception of income inequality and Occupy Wall Street (via Google trends), front page and online news coverage of Occupy, and the number of words in total for each date of the Congressional record, 2009-2015.
 
                                     </div>
+                                  </td>
+                              </table>
+                              <br>
+                          </div>
+                          </div>
+                          </div>
 
-                                </td>
-                            </table>
-                            <br>
-                    </div>
-            </div>
+
+        <!-- Images used to open the lightbox -->
+        <div class="row">
+          <div class="column">
+            <img src="images/1.jpg" onclick="openModal();currentSlide(1)" class="hover-shadow">
+          </div>
+          <div class="column">
+            <img src="images/2.jpg" onclick="openModal();currentSlide(2)" class="hover-shadow">
+          </div>
+          <div class="column">
+            <img src="images/3.jpg" onclick="openModal();currentSlide(3)" class="hover-shadow">
+          </div>
+          <div class="column">
+            <img src="images/4.jpg" onclick="openModal();currentSlide(4)" class="hover-shadow">
+          </div>
         </div>
+
+        <!-- The Modal/Lightbox -->
+        <div id="myModal" class="modal">
+          <span class="close cursor" onclick="closeModal()">&times;</span>
+          <div class="modal-content">
+
+            <div class="mySlides">
+              <div class="numbertext">1 / 4</div>
+              <img src="images/1.jpg" style="width:100%">
+            </div>
+
+            <div class="mySlides">
+              <div class="numbertext">2 / 4</div>
+              <img src="images/2.jpg" style="width:100%">
+            </div>
+
+            <div class="mySlides">
+              <div class="numbertext">3 / 4</div>
+              <img src="images/3.jpg" style="width:100%">
+            </div>
+
+            <div class="mySlides">
+              <div class="numbertext">4 / 4</div>
+              <img src="images/4.jpg" style="width:100%">
+            </div>
+
+            <!-- Next/previous controls -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+            <!-- Caption text -->
+            <div class="caption-container">
+              <p id="caption"></p>
+            </div>
+
+            <!-- Thumbnail image controls -->
+            <div class="column">
+              <img class="demo" src="images/2.jpg" onclick="currentSlide(1)" alt="Nature">
+            </div>
+
+            <div class="column">
+              <img class="demo" src="images/2.jpg" onclick="currentSlide(2)" alt="Trolltunga">
+            </div>
+
+            <div class="column">
+              <img class="demo" src="images/2.jpg" onclick="currentSlide(3)" alt="Mountains">
+            </div>
+
+            <div class="column">
+              <img class="demo" src="images/2.jpg" onclick="currentSlide(4)" alt="Lights">
+            </div>
+          </div>
+        </div>
+
+        <script>
+          function openModal() {
+            document.getElementById('myModal').style.display = "block";
+          }
+
+          function closeModal() {
+            document.getElementById('myModal').style.display = "none";
+          }
+
+          var slideIndex = 1;
+          showSlides(slideIndex);
+
+          function plusSlides(n) {
+            showSlides(slideIndex += n);
+          }
+
+          function currentSlide(n) {
+            showSlides(slideIndex = n);
+          }
+
+          function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            var captionText = document.getElementById("caption");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].className += " active";
+            captionText.innerHTML = dots[slideIndex-1].alt;
+          }
+          </script>
+
 
     </section>
 
@@ -274,7 +383,7 @@
                 <div class="col-sm-6 col-sm-offset-3">
 
                     <div class="pfblock-header wow fadeInUp">
-                        <h2 class="pfblock-title">ABOUT THIS VISUALIZATION</h2>
+                        <h2 class="pfblock-title">ABOUT THIS PROJECT</h2>
                         <div class="pfblock-line"></div>
                         <div class="center-justified">
                             This visualization was created by <a href="http://jmausolf.github.io" class="btn-custom-color">Joshua Mausolf</a> as part of his research as a Ph.D. student in the Department of Sociology at The University of Chicago. He is interested in applying statistical and computational methods to the study of inequality across multiple societal intersections including politics and public policy, stratification, health, family, race, and gender.
@@ -359,6 +468,7 @@
     <script src="assets/js/waypoints.min.js"></script>
     <script src="assets/js/jquery.cbpQTRotator.js"></script>
     <script src="assets/js/custom.js"></script>
+    <script src="assets/js/imgviewer.js"></script>
 
 </body>
 </html>
