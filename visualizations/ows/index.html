@@ -39,6 +39,7 @@
 
         <link rel="stylesheet" type="text/css" href="css/style6.css" />
         <script type="text/javascript" src="js/modernizr.custom.86080.js"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
 
     </head>
@@ -146,12 +147,11 @@
                         <div class="pfblock-line"></div>
                         <div class="center-justified">
 
-                            In the analysis of social movements, emphasis typically falls upon legislative gains, but movements can also have hard to foresee effects. One possible impact is our conception and awareness of inequality, and one prominent outlet to observe this change is the federal government, namely the United States Congress.
+                            In the analysis of social movements, emphasis typically falls upon legislative gains, but movements can also have hard to foresee effects. One possible impact is our conception and awareness of inequality, and one prominent outlet to observe this change is the federal government, namely the President and United States Congress.
 
                             <br><br>
 
-                            Although Occupy did not achieve much legislatively, what impacts did the movement have on changing the dialogue of inequality in the United States Congress?
-
+                            Although Occupy did not have immediate impacts on legislation, what impacts did the movement have on changing the dialogue of inequality and paying the `fair share` by President Obama and the United States Congress?
 
                         </div>
                     </div><!-- .row -->
@@ -192,15 +192,23 @@
 
                     <div class="center-justified">
 
-                            Data for this project was collected between 2009-2016 from the Government Printing Office, which chronicles the <a href="https://www.gpo.gov/fdsys/browse/collection.action?collectionCode=CREC" class="btn-custom-color">United States Congressional Record</a>. This website has rate limiters that prevent rapid download of data. To work around this issue, a time delay was built in to the Python script. To augment faster and more efficient download, the full PDF was downloaded using a Python based wget procedure, which were converted to text subsequently using a bash script.
+                            Data for this project comes from several sources including text data from presidential speeches and congressional records as well as data on Occupy arrests and news coverage of Occupy. Full details are found in the article. Below, I briefly outline several of the data sources and methods.
 
                             <br><br>
 
-                            A subsequent Python and NLTK script was run on the data to assemble a dataset of keyword and phrase counts. Over two hundred keywords and phrases were counted. Two primary categories, "inequality" and "fair share" stand out. This data was merged with datasets on Occupy Wall Street arrests, Google search trends data, national economic data, and data on media coverage.
+                            To collect presidential speeches and remarks, I developed a web-scraping application written in Python and Shell (<a href="https://github.com/jmausolf/White_House_Speeches" class="btn-custom-color">Mausolf 2016a</a>) With respect to President Obama, this yields 4,646 speeches between January 21, 2009 and November 15, 2015.
 
                             <br><br>
 
-                            The observed keyword and phrase counts were examined graphically in relation to Occupy Wall Street arrests and the data were analyzed further using time series analysis to establish if Occupy arrests predict the increased discussion of inequality, all else equal.
+                            The Congressional Record documents the speeches and proceedings of Congress (both House and Senate) on days Congress is in session (<a href="https://www.gpo.gov/fdsys/browse/collection.action?collectionCode=CREC" class="btn-custom-color">United States, Government Printing Office 2016</a>). For each day of the Congressional Record, a single PDF of the entire record exists, inclusive of the daily digest, extension of remarks, and proceedings of the House and Senate. I developed a second web-scraping script to download and convert these online PDF’s to raw text (<a href="https://github.com/jmausolf/Congressional_Record" class="btn-custom-color">Mausolf 2016b</a>).
+
+                            <br><br>
+
+                            Subsequently, I implemented code to analyze each presidential and congressional text for specific keywords and phrases related to Occupy’s motivating issues (<a href="https://github.com/jmausolf/Python_Tutorials/tree/master/Text_Keyword_Counter" class="btn-custom-color">Mausolf 2016c</a>). This code builds a dataset of speech metrics consisting of a speech ID, date, summary statistics, and numerous keyword counts for pre-specified, theoretically-driven words and phrases expected to change in response to Occupy Wall Street. This data was merged with datasets on Occupy Wall Street arrests, Google search trends data, national economic data, and data on media coverage.
+
+                            <br><br>
+
+                            The observed keyword and phrase counts were examined graphically in relation to Occupy Wall Street arrests and the data were analyzed further using ARFIMA time series models to establish Occupy's role in predicting an increase in (A) front-page and online news coverage of the movement, (B) the effects of news media on President Obama and Congress, (C) the direct effects of Occupy on President Obama and Congress, and (D) the effect of President Obama's fair share and inequality speech on Congress.
 
 
                     </div>
@@ -224,8 +232,8 @@
 
 
                     <div class="pfblock-header wow fadeInUp">
-                        <h2 class="pfblock-title">Congressional Discussion of Inequality</h2>
-                        <h2 class="pfblock-title">in Response to Occupy Wall Street</h2>
+                        <h2 class="pfblock-title">Results</h2>
+
                         <div class="pfblock-line"></div>
                         <div class="pfblock-subtitle"></div>
                     </div>
@@ -241,6 +249,25 @@
 
                             <table class="center" cellpadding="10" cellspacing="0" style="width: 100%">
                                 <td>
+
+                                  <div class="center-justified">
+
+
+                                    In the analysis, I test different mechanisms, including repression (Occupy Wall Street arrests), media coverage of Occupy, public opinion, and presidential agenda-setting by applying a novel combination of web scraping, natural language processing, and time series models. I suggest that movement success can be measured in its ability to shape discursive opportunity structures, and I argue that the role of the president should be at the forefront of social movements research. Ultimately, I demonstrate (1) that the repression of Occupy protesters not only predicts media coverage but also increases discursive opportunities through President Obama and Congress, (2) that media coverage of Occupy predicts presidential discourse, (3) that the president’s rhetorical shift increases congressional response, and (4) that this change persists after the movement faltered.
+
+                                    <br><br>
+
+                                    <img src="images/fig5.png" alt="Significant Dynamic Relationships Shown in ARFIMA Models">
+                                    <br><br>
+                                    <h3 class="pfblock-title">Significant Dynamic Relationships Shown in ARFIMA Models</h3><h6> Note: Solid lines indicate statistically significant coefficients in one or more models. Edge thickness weighted by statistical significance of the most significant factor in any model, reported next to the indicated hypothesis. Significance levels using z-test. Indicated probabilities denote that one or more ARFIMA models has a coefficient predicting the directed edge at the specified probability threshold.</h6>
+
+                                    <br><br>
+
+
+                                  </div>
+
+
+
                                   <!-- Images used to open the lightbox -->
                                   <div class="row">
                                     <div class="column">
@@ -256,14 +283,13 @@
                                       <img src="images/c4_cfs.png" onclick="openModal();currentSlide(4)" class="hover-shadow">
                                     </div>
                                   </div>
+                                  <br><br>
+
+                                  <div class="center-justified">
+                                    <h3 class="pfblock-title">Government Cumulative Observed and Modeled Speech versus Occupy Arrests</h3><h6> Note: Observed Values of ARFIMA Model Predictions from Tables 4 and 5 (Count Models) for Inequality and Fair Share rhetoric by President Obama (Table 4) and Congress (Table 5). Occupy arrests are displayed in each graph (acutely increasing solid line). The two closely correlated lines are observed speech (solid line) versus predicted speech (dashed line). The vertical dashed line marks the beginning of Occupy Wall Street, September 17, 2011. An interactive plot of the observed data is available online.</h6>
+                                  </div>
 
 
-                                    <div class="center-justified">
-
-                                        The observed relationship between Occupy arrests and congressional rhetoric is statistically significant. Using ARFIMA models to conduct time series analysis, current day arrests and arrests one day ago predict increased Congressional discussion of inequality keywords and fair share keywords. This is true while controlling for economic conditions (S&P500 and unemployment rate), public perception of income inequality and Occupy Wall Street (via Google trends), front page and online news coverage of Occupy, and the number of words in total for each date of the Congressional record, 2009-2015.
-
-
-                                    </div>
                                   </td>
                               </table>
                               <br>
@@ -382,12 +408,32 @@
                 <div class="col-sm-6 col-sm-offset-3">
 
                     <div class="pfblock-header wow fadeInUp">
-                        <h2 class="pfblock-title">ABOUT THIS PROJECT</h2>
+                        <h2 class="pfblock-title">Project Downloads</h2>
                         <div class="pfblock-line"></div>
                         <div class="center-justified">
-                            This visualization was created by <a href="http://jmausolf.github.io" class="btn-custom-color">Joshua Mausolf</a> as part of his research as a Ph.D. student in the Department of Sociology at The University of Chicago. He is interested in applying statistical and computational methods to the study of inequality across multiple societal intersections including politics and public policy, stratification, health, family, race, and gender.
+                            This research was conducted by <a href="http://jmausolf.github.io" class="btn-custom-color">Joshua Gary Mausolf</a> as part of his doctoral research in the Department of Sociology at The University of Chicago. The article is published in Social Science Research 67:91-114. Links to the paper, appendix, and code are found below.
 
-                            For more information on these projects and others, please visit his homepage <a href="http://jmausolf.github.io" class="btn-custom-color"> jmausolf.github.io </a>.
+
+
+                            <br><br>
+                            <a href="documents/2017__Mausolf_Joshua__Occupy_the_Government_SSR.pdf" class="btn-custom-color" data-wow-delay=".5s"><i class="fas fa-file-pdf"></i> Paper</a><h5> Mausolf, Joshua Gary “Occupy the Government: Analyzing Presidential and Congressional Discursive Response to Movement Repression.” Social Science Research.</h5>
+
+                            <a href="documents/2017__Mausolf_Joshua_Appendix_SSR.pdf" class="btn-custom-color" data-wow-delay=".5s"><i class="fas fa-file-pdf"></i> Appendix </a><h5> Methods Appendix to SSR 67:91-114.</h5>
+
+                            <a href="https://github.com/jmausolf/White_House_Speeches" class="btn-custom-color" data-wow-delay=".5s"><i class="fab fa-github-square"></i> Code - White House Speeches </a>
+                            <br>
+
+                            <a href="https://github.com/jmausolf/Congressional_Record" class="btn-custom-color" data-wow-delay=".5s"><i class="fab fa-github-square"></i> Code - Congressional Record </a>
+                            <br>
+
+
+                            <a href="https://github.com/jmausolf/Python_Tutorials/tree/master/Text_Keyword_Counter" class="btn-custom-color" data-wow-delay=".5s"><i class="fab fa-github-square"></i> Code - Python Keyword Counter </a>
+                            <br>
+
+                            <br><br>
+
+
+
 
                         </div>
 
