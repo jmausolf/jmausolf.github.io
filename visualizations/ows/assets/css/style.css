@@ -1140,8 +1140,10 @@ body {
 }
 
 .row > .column {
-  width: 25%;
-  padding: 0 0px;
+  width: 50%;
+  padding: 0px;
+  margin-top: 2em;
+
 }
 
 .row:after {
@@ -1175,21 +1177,22 @@ body {
   background-color: #fefefe;
   margin: auto;
   padding: 0;
-  width: 90%;
+  width: 60%;
   max-width: 1200px;
 }
 
 /* The Close Button */
 .close {
-  color: #f2f2f2;
+  color: white;
+  background-color: rgba(235, 235, 235, .8);
   position: fixed;
 	z-index: 999;
-	top: 5em;
-	right: 2em;
-  background-color: rgba(0, 0, 0, 0.8);
+	top: 2em;
+	right: 1em;
 	display: block;
 	width: 35px;
 	height: 35px;
+  font-size: 35px;
 	text-align: center;
 
 }
@@ -1214,11 +1217,13 @@ body {
 .next {
   cursor: pointer;
   position: absolute;
+  background-color: rgba(0, 0, 0, 0.2);
   top: 50%;
-  width: auto;
-  padding: 16px;
   margin-top: -50px;
-  color: white;
+  width: auto;
+  height: auto;
+  padding: 16px;
+  color: black;
   font-weight: bold;
   font-size: 20px;
   transition: 0.6s ease;

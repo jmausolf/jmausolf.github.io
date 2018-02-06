@@ -241,16 +241,27 @@
 
                             <table class="center" cellpadding="10" cellspacing="0" style="width: 100%">
                                 <td>
-                                    <div id="seadragon">
-
-                                    <img src="http://ars.els-cdn.com/content/image/1-s2.0-S0049089X16306937-gr6.jpg"></img>
-                                    <br><br>
-
+                                  <!-- Images used to open the lightbox -->
+                                  <div class="row">
+                                    <div class="column">
+                                      <img src="images/c1_wiq.png" onclick="openModal();currentSlide(1)" class="hover-shadow">
                                     </div>
+                                    <div class="column">
+                                      <img src="images/c2_wfs.png" onclick="openModal();currentSlide(2)" class="hover-shadow">
+                                    </div>
+                                    <div class="column">
+                                      <img src="images/c3_ciq.png" onclick="openModal();currentSlide(3)" class="hover-shadow">
+                                    </div>
+                                    <div class="column">
+                                      <img src="images/c4_cfs.png" onclick="openModal();currentSlide(4)" class="hover-shadow">
+                                    </div>
+                                  </div>
+
 
                                     <div class="center-justified">
 
                                         The observed relationship between Occupy arrests and congressional rhetoric is statistically significant. Using ARFIMA models to conduct time series analysis, current day arrests and arrests one day ago predict increased Congressional discussion of inequality keywords and fair share keywords. This is true while controlling for economic conditions (S&P500 and unemployment rate), public perception of income inequality and Occupy Wall Street (via Google trends), front page and online news coverage of Occupy, and the number of words in total for each date of the Congressional record, 2009-2015.
+
 
                                     </div>
                                   </td>
@@ -261,21 +272,7 @@
                           </div>
 
 
-        <!-- Images used to open the lightbox -->
-        <div class="row">
-          <div class="column">
-            <img src="images/1.jpg" onclick="openModal();currentSlide(1)" class="hover-shadow">
-          </div>
-          <div class="column">
-            <img src="images/2.jpg" onclick="openModal();currentSlide(2)" class="hover-shadow">
-          </div>
-          <div class="column">
-            <img src="images/3.jpg" onclick="openModal();currentSlide(3)" class="hover-shadow">
-          </div>
-          <div class="column">
-            <img src="images/4.jpg" onclick="openModal();currentSlide(4)" class="hover-shadow">
-          </div>
-        </div>
+
 
         <!-- The Modal/Lightbox -->
         <div id="myModal" class="modal">
@@ -284,23 +281,24 @@
 
             <div class="mySlides">
               <div class="numbertext">1 / 4</div>
-              <img src="images/1.jpg" style="width:100%">
+              <img src="images/c1_wiq.png" style="width:100%">
             </div>
 
             <div class="mySlides">
               <div class="numbertext">2 / 4</div>
-              <img src="images/2.jpg" style="width:100%">
+              <img src="images/c2_wfs.png" style="width:100%">
             </div>
 
             <div class="mySlides">
               <div class="numbertext">3 / 4</div>
-              <img src="images/3.jpg" style="width:100%">
+              <img src="images/c3_ciq.png" style="width:100%">
             </div>
 
             <div class="mySlides">
               <div class="numbertext">4 / 4</div>
-              <img src="images/4.jpg" style="width:100%">
+              <img src="images/c4_cfs.png" style="width:100%">
             </div>
+
 
             <!-- Next/previous controls -->
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -313,20 +311,21 @@
 
             <!-- Thumbnail image controls -->
             <div class="column">
-              <img class="demo" src="images/2.jpg" onclick="currentSlide(1)" alt="Nature">
+              <img class="demo" src="images/c1_wiq.png" onclick="currentSlide(1)" alt="President Obama - Inequality">
             </div>
 
             <div class="column">
-              <img class="demo" src="images/2.jpg" onclick="currentSlide(2)" alt="Trolltunga">
+              <img class="demo" src="images/c2_wfs.png" onclick="currentSlide(2)" alt="President Obama - Fair Share">
             </div>
 
             <div class="column">
-              <img class="demo" src="images/2.jpg" onclick="currentSlide(3)" alt="Mountains">
+              <img class="demo" src="images/c3_ciq.png" onclick="currentSlide(3)" alt="Congress - Inequality">
             </div>
 
             <div class="column">
-              <img class="demo" src="images/2.jpg" onclick="currentSlide(4)" alt="Lights">
+              <img class="demo" src="images/c4_cfs.png" onclick="currentSlide(4)" alt="Congress - Fair Share">
             </div>
+
           </div>
         </div>
 
