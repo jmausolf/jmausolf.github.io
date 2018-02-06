@@ -147,11 +147,11 @@
                         <div class="pfblock-line"></div>
                         <div class="center-justified">
 
-                            In the analysis of social movements, emphasis typically falls upon legislative gains, but movements can also have hard to foresee effects. One possible impact is our conception and awareness of inequality, and one prominent outlet to observe this change is the federal government, namely the President and United States Congress.
+                            In the analysis of social movements, emphasis typically falls upon legislative gains, but movements can also have unforseen effects. One possible impact is our conception and awareness of inequality, and one prominent outlet to observe this change is the federal government, namely the President and United States Congress.
 
                             <br><br>
 
-                            Although Occupy did not have immediate impacts on legislation, what impacts did the movement have on changing the dialogue of inequality and paying the `fair share` by President Obama and the United States Congress?
+                            Although Occupy did not have immediate impacts on legislation, what effect did the movement have on changing the dialogue of inequality and paying the `fair share` by President Obama and Congress?
 
                         </div>
                     </div><!-- .row -->
@@ -192,23 +192,23 @@
 
                     <div class="center-justified">
 
-                            Data for this project comes from several sources including text data from presidential speeches and congressional records as well as data on Occupy arrests and news coverage of Occupy. Full details are found in the article. Below, I briefly outline several of the data sources and methods.
+                            Data for this project comes from several sources including text data from presidential speeches and congressional records as well as data on Occupy arrests and news coverage of Occupy. Full details are found in the <a href="#about" class="btn-custom-color">published article, "Occupy the Government"</a>. Below, I briefly outline the text-based data sources and methods.
 
                             <br><br>
 
-                            To collect presidential speeches and remarks, I developed a web-scraping application written in Python and Shell (<a href="https://github.com/jmausolf/White_House_Speeches" class="btn-custom-color">Mausolf 2016a</a>) With respect to President Obama, this yields 4,646 speeches between January 21, 2009 and November 15, 2015.
+                            To collect presidential speeches and remarks, I developed a web-scraping application written in Python and Shell (<a href="https://github.com/jmausolf/White_House_Speeches" class="btn-custom-color">Mausolf 2016a</a>) With respect to President Obama, this yields 4,646 speeches and 6.62 million words between January 21, 2009 and November 15, 2015.
 
                             <br><br>
 
-                            The Congressional Record documents the speeches and proceedings of Congress (both House and Senate) on days Congress is in session (<a href="https://www.gpo.gov/fdsys/browse/collection.action?collectionCode=CREC" class="btn-custom-color">United States, Government Printing Office 2016</a>). For each day of the Congressional Record, a single PDF of the entire record exists, inclusive of the daily digest, extension of remarks, and proceedings of the House and Senate. I developed a second web-scraping script to download and convert these online PDF’s to raw text (<a href="https://github.com/jmausolf/Congressional_Record" class="btn-custom-color">Mausolf 2016b</a>).
+                            The Congressional Record documents the speeches and proceedings of Congress (both House and Senate) on days Congress is in session (<a href="https://www.gpo.gov/fdsys/browse/collection.action?collectionCode=CREC" class="btn-custom-color">United States, Government Printing Office 2016</a>). For each day of the Congressional Record, a single PDF of the entire record exists, inclusive of the daily digest, extension of remarks, and proceedings of the House and Senate. I developed a second web-scraping script to download and convert these online PDF’s to raw text (<a href="https://github.com/jmausolf/Congressional_Record" class="btn-custom-color">Mausolf 2016b</a>). In total, this resulted in 1,256 congressional records, totaling 187.70 million words.
 
                             <br><br>
 
-                            Subsequently, I implemented code to analyze each presidential and congressional text for specific keywords and phrases related to Occupy’s motivating issues (<a href="https://github.com/jmausolf/Python_Tutorials/tree/master/Text_Keyword_Counter" class="btn-custom-color">Mausolf 2016c</a>). This code builds a dataset of speech metrics consisting of a speech ID, date, summary statistics, and numerous keyword counts for pre-specified, theoretically-driven words and phrases expected to change in response to Occupy Wall Street. This data was merged with datasets on Occupy Wall Street arrests, Google search trends data, national economic data, and data on media coverage.
+                            Once the data was collected, I implemented code to analyze each presidential and congressional text for specific keywords and phrases related to Occupy’s motivating issues (<a href="https://github.com/jmausolf/Python_Tutorials/tree/master/Text_Keyword_Counter" class="btn-custom-color">Mausolf 2016c</a>). This code builds a dataset of speech metrics consisting of a speech ID, date, summary statistics, and numerous keyword counts for pre-specified, theoretically-driven words and phrases expected to change in response to Occupy Wall Street. This data was merged with datasets on Occupy Wall Street arrests, Google search trends data, national economic data, and data on media coverage.
 
                             <br><br>
 
-                            The observed keyword and phrase counts were examined graphically in relation to Occupy Wall Street arrests and the data were analyzed further using ARFIMA time series models to establish Occupy's role in predicting an increase in (A) front-page and online news coverage of the movement, (B) the effects of news media on President Obama and Congress, (C) the direct effects of Occupy on President Obama and Congress, and (D) the effect of President Obama's fair share and inequality speech on Congress.
+                            The observed keyword and phrase counts were examined graphically in relation to Occupy Wall Street arrests and the data were analyzed further using ARFIMA time series models to establish Occupy's role in predicting an increase in front-page and online news coverage of the movement, the indirect effects of Occupy news media on President Obama and Congress, the direct effects of Occupy on President Obama and Congress, and the effect of President Obama's fair share and inequality discourse on Congress. In the results, I show a figure depicting these dynamic relationships and modeled effects.
 
 
                     </div>
@@ -253,7 +253,7 @@
                                   <div class="center-justified">
 
 
-                                    In the analysis, I test different mechanisms, including repression (Occupy Wall Street arrests), media coverage of Occupy, public opinion, and presidential agenda-setting by applying a novel combination of web scraping, natural language processing, and time series models. I suggest that movement success can be measured in its ability to shape discursive opportunity structures, and I argue that the role of the president should be at the forefront of social movements research. Ultimately, I demonstrate (1) that the repression of Occupy protesters not only predicts media coverage but also increases discursive opportunities through President Obama and Congress, (2) that media coverage of Occupy predicts presidential discourse, (3) that the president’s rhetorical shift increases congressional response, and (4) that this change persists after the movement faltered.
+                                    In my analysis, I test different mechanisms, including repression (Occupy Wall Street arrests), media coverage of Occupy, public opinion, and presidential agenda-setting by applying a novel combination of web scraping, natural language processing, and time series models. I suggest that movement success can be measured in its ability to shape discursive opportunity structures, and I argue that the role of the president should be at the forefront of social movements research. Ultimately, I demonstrate (1) that the repression of Occupy protesters not only predicts media coverage but also increases discursive opportunities through President Obama and Congress, (2) that media coverage of Occupy predicts presidential discourse, (3) that the president’s rhetorical shift increases congressional response, and (4) that this change persists after the movement faltered. Below, I include several graphs from the article that help illustrate the analysis.
 
                                     <br><br>
 
@@ -411,7 +411,7 @@
                         <h2 class="pfblock-title">Project Downloads</h2>
                         <div class="pfblock-line"></div>
                         <div class="center-justified">
-                            This research was conducted by <a href="http://jmausolf.github.io" class="btn-custom-color">Joshua Gary Mausolf</a> as part of his doctoral research in the Department of Sociology at The University of Chicago. The article is published in Social Science Research 67:91-114. Links to the paper, appendix, and code are found below.
+                            This research was conducted by <a href="http://jmausolf.github.io" class="btn-custom-color">Joshua Gary Mausolf</a> as part of his doctoral studies in the Department of Sociology at The University of Chicago. The article is published in <em>Social Science Research</em> 67:91-114. Links to the paper, appendix, and code are found below.
 
 
 
@@ -420,8 +420,14 @@
 
                             <a href="documents/2017__Mausolf_Joshua_Appendix_SSR.pdf" class="btn-custom-color" data-wow-delay=".5s"><i class="fas fa-file-pdf"></i> Appendix </a><h5> Methods Appendix to SSR 67:91-114.</h5>
 
+                            <br>
+
+                            <!--<a href="documents/2017__Mausolf_Joshua__Occupy_the_Government_Presentation.pptx" class="btn-custom-color" data-wow-delay=".5s"><i class="fas fa-file-powerpoint"></i> Slide Deck - Occupy the Government</a>
+                            <br><br>-->
+
                             <a href="https://github.com/jmausolf/White_House_Speeches" class="btn-custom-color" data-wow-delay=".5s"><i class="fab fa-github-square"></i> Code - White House Speeches </a>
                             <br>
+
 
                             <a href="https://github.com/jmausolf/Congressional_Record" class="btn-custom-color" data-wow-delay=".5s"><i class="fab fa-github-square"></i> Code - Congressional Record </a>
                             <br>
