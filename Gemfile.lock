@@ -17,7 +17,7 @@ GEM
     deep_merge (1.0.0)
     erubis (2.7.0)
     fast-stemmer (1.0.2)
-    ffi (1.9.3)
+    ffi (1.15.5)
     filey-diff (1.4.3)
     highline (1.6.20)
     jekyll (1.4.3)
