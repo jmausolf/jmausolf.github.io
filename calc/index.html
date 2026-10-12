@@ -293,6 +293,55 @@
             color: #38a169;
             border: 1px solid #9ae6b4;
         }
+        .result-item .sub {
+            margin-top: 6px;
+            font-size: 0.8em;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .field-hint {
+            margin-top: 6px;
+            font-size: 0.85em;
+            color: #718096;
+        }
+
+        .table-scroll {
+            overflow-x: auto;
+            border-radius: 10px;
+        }
+
+        .table-scroll .breakdown-table {
+            min-width: 1250px;
+        }
+
+        .breakdown-table td.active-col {
+            background: #ebf8ff;
+            font-weight: 700;
+            color: #0D3068;
+        }
+
+        .breakdown-table th.active-col {
+            box-shadow: inset 0 -4px 0 #f6e05e;
+        }
+
+        .breakdown-table tr.retired-row td {
+            background-color: #fffaf0;
+        }
+
+        .breakdown-table tr.retired-row td.active-col {
+            background-color: #ebf8ff;
+        }
+
+        .breakdown-table tr.retire-start td {
+            border-top: 3px solid #0092FF;
+        }
+
+        .retire-badge {
+            background: #ebf8ff;
+            color: #0D3068;
+            border: 1px solid #90cdf4;
+        }
     </style>
 </head>
 <body>
@@ -308,22 +357,27 @@
                 
                 <div class="input-group">
                     <label for="bo">Annual Bonus ($)</label>
-                    <input type="number" id="bo" value="30000" step="1000">
+                    <input type="number" id="bo" value="0" step="1000">
                 </div>
 
                 <div class="input-group">
                     <label for="bu">Monthly Savings/Investments ($)</label>
-                    <input type="number" id="bu" value="5500" step="100">
+                    <input type="number" id="bu" value="8000" step="100">
                 </div>
 
                 <div class="input-group">
                     <label for="ba">Initial Balance ($)</label>
-                    <input type="number" id="ba" value="1000000" step="10000">
+                    <input type="number" id="ba" value="1375000" step="10000">
                 </div>
 
                 <div class="input-group">
                     <label for="yrs">Planning Years</label>
-                    <input type="number" id="yrs" value="15" min="1" max="50">
+                    <input type="number" id="yrs" value="40" min="1" max="50">
+                </div>
+                <div class="input-group">
+                    <label for="ytr">Years to Retirement</label>
+                    <input type="number" id="ytr" value="10" min="0" max="50">
+                    <div class="field-hint">Planning Years is the full time horizon. Savings and bonus stop after this many years and withdrawals begin.</div>
                 </div>
 
                 <div class="input-group">
@@ -352,7 +406,7 @@
                 
                 <div class="input-group">
                     <label for="rs">Required Salary ($)</label>
-                    <input type="number" id="rs" value="150000" step="5000">
+                    <input type="number" id="rs" value="120000" step="5000">
                 </div>
 
                 <div class="input-group">
@@ -362,7 +416,15 @@
 
                 <div class="input-group">
                     <label for="sw">Safe Withdrawal Rate (%)</label>
-                    <input type="number" id="sw" value="3" step="0.1" min="1" max="10">
+                    <input type="number" id="sw" value="4" step="0.1" min="1" max="10">
+                </div>
+                <div class="input-group">
+                    <label for="ws">Withdrawal Strategy</label>
+                    <select id="ws" onchange="onStrategyChange()">
+                        <option value="rule">Safe withdrawal rule: Required Salary, raised with inflation</option>
+                        <option value="pct">Straight % of portfolio each year (no inflation adjustment)</option>
+                    </select>
+                    <div class="field-hint">The rule draws the Required Salary, inflated to the first retirement year and raised with inflation every year after. The other takes the withdrawal rate times that year's starting balance, every year.</div>
                 </div>
 
                 <div class="hits-container">
@@ -382,7 +444,7 @@
                 <div class="hits-container">
                     <h3>Monthly Savings Hits (Ongoing Changes)</h3>
                     <p style="font-size: 0.9em; color: #666; margin-bottom: 15px;">
-                        Add positive amounts for income increases or negative amounts for expense increases that reduce savings
+                        Add positive amounts for income increases or negative amounts for expense increases that reduce savings<br><br>Once retirement begins, savings, bonus and earlier monthly changes are set to zero automatically. Hits dated after retirement starts apply as ongoing monthly income (+, e.g. Social Security) or expenses (-).
                     </p>
                     <div class="hit-inputs">
                         <input type="number" id="bu-hit-amount" placeholder="Amount ($) - use negative for reduced savings" step="100">
@@ -399,6 +461,15 @@
             <button class="btn" onclick="calculateAndVisualize()">Calculate & Visualize</button>
             <div class="chart-container">
                 <canvas id="mainChart"></canvas>
+            </div>
+        </div>
+        <div class="panel" id="withdrawal-panel" style="display: none; margin-top: 30px;">
+            <h2>Withdrawal Strategy Comparison</h2>
+            <p style="font-size: 0.9em; color: #666; margin-bottom: 10px;">
+                Annual salary under each strategy, each simulated on its own portfolio path. Bars show how much more (green) or less (red) the straight % of portfolio method pays than the inflation-adjusted rule.
+            </p>
+            <div class="chart-container">
+                <canvas id="withdrawalChart"></canvas>
             </div>
         </div>
 
@@ -423,6 +494,7 @@
                 this.balanceHits = [];
                 this.savingsHits = [];
                 this.chart = null;
+                this.chart2 = null;
             }
 
             getBoMo(bo, tr = 0.80) {
@@ -444,46 +516,85 @@
                 return yra * ygMultiplier;
             }
 
-            balanceOverYears(params) {
-                const { bo, bu, ba, yrs, i1, i2, ip, yg } = params;
+            balanceOverYears(params, strategy = 'rule') {
+                const { bo, bu, ba, yrs, i1, i2, ip, yg, ytr, ir, sw, rs } = params;
                 let currentBalance = ba;
                 let currentBu = bu;
+                let retirementFlow = 0;   // ongoing monthly amount from savings hits dated after retirement starts
+                let depletedYear = null;
                 const results = [];
 
                 for (let year = 0; year < yrs; year++) {
-                    // Apply balance hits
-                    const balanceHit = this.balanceHits.find(hit => hit.year === year + 1);
-                    const balanceHitAmount = balanceHit ? balanceHit.amount : 0;
-                    
+                    const yearNum = year + 1;
+                    const retired = yearNum > ytr;
+
+                    // Apply balance hits (every hit dated this year)
+                    const balanceHits = this.balanceHits.filter(hit => hit.year === yearNum);
+                    const balanceHitAmount = balanceHits.reduce((sum, hit) => sum + hit.amount, 0);
+
                     // Apply savings hits
-                    const savingsHit = this.savingsHits.find(hit => hit.year === year + 1);
-                    if (savingsHit) {
-                        currentBu += savingsHit.amount;
+                    const savingsHits = this.savingsHits.filter(hit => hit.year === yearNum);
+                    const savingsHitAmount = savingsHits.reduce((sum, hit) => sum + hit.amount, 0);
+                    if (!retired) {
+                        currentBu += savingsHitAmount;
+                    } else {
+                        // Savings and bonus are zeroed in retirement; later hits act as new ongoing income/expense
+                        retirementFlow += savingsHitAmount;
+                    }
+
+                    // Retirement withdrawal, taken at the start of the year from the prior year-end balance
+                    let ruleSalary = null;
+                    let pctSalary = null;
+                    let withdrawal = 0;
+                    if (retired) {
+                        const basis = Math.max(currentBalance, 0);
+                        // Rule: the Required Salary (today's dollars) inflated to the start of this year, so it
+                        // moves with both the Required Salary and Inflation inputs. Year 1 starts at today's dollars.
+                        ruleSalary = rs * Math.pow(1 + ir, yearNum - 1);
+                        // Alternative: withdrawal rate x this year's starting balance, no inflation adjustment
+                        pctSalary = sw * basis;
+                        withdrawal = Math.min(strategy === 'pct' ? pctSalary : ruleSalary, basis);
                     }
 
                     // Calculate growth
-                    const { baNew, baGrowth } = this.getBalanceNewGrowth(currentBalance, i1, i2, ip);
-                    const yearlyAmount = this.getYearlyAmount(bo, currentBu, yg, year);
-                    
+                    const { baNew, baGrowth } = this.getBalanceNewGrowth(currentBalance - withdrawal, i1, i2, ip);
+                    const yearlyAmount = retired
+                        ? retirementFlow * 12
+                        : this.getYearlyAmount(bo, currentBu, yg, year);
+
                     currentBalance = baNew + yearlyAmount + balanceHitAmount;
+                    if (retired && currentBalance < 0) {
+                        currentBalance = 0;
+                    }
+                    const depleted = retired && currentBalance <= 0 && depletedYear === null;
+                    if (depleted) {
+                        depletedYear = yearNum;
+                    }
                     const totalGrowth = baGrowth + yearlyAmount;
                     const interestGrowth = totalGrowth - yearlyAmount;
 
                     results.push({
-                        year: year + 1,
+                        year: yearNum,
                         balance: Math.round(currentBalance),
                         totalGrowth: Math.round(totalGrowth),
                         yearlyContribution: Math.round(yearlyAmount),
                         monthlyContribution: Math.round(yearlyAmount / 12),
                         interestGrowth: Math.round(interestGrowth),
                         monthlyInterestGrowth: Math.round(interestGrowth / 12),
-                        currentBu: Math.round(currentBu),
-                        balanceHit: balanceHit,
-                        savingsHit: savingsHit
+                        currentBu: Math.round(retired ? retirementFlow : currentBu),
+                        balanceHits: balanceHits,
+                        savingsHits: savingsHits,
+                        retired: retired,
+                        retireStart: retired && yearNum === ytr + 1,
+                        withdrawal: Math.round(withdrawal),
+                        monthlySalary: Math.round(withdrawal / 12),
+                        ruleSalary: retired ? Math.round(ruleSalary) : null,
+                        pctSalary: retired ? Math.round(pctSalary) : null,
+                        depleted: depleted
                     });
                 }
 
-                return results;
+                return { rows: results, depletedYear: depletedYear };
             }
 
             calculateRequiredBalance(rs, ir, yr, sw) {
@@ -597,26 +708,54 @@
             updateSavingsHitsList();
         }
 
+        function fmtN(n) {
+            return Math.round(n).toLocaleString();
+        }
+
+        function onStrategyChange() {
+            // Re-run automatically if results are already on screen
+            if (document.getElementById('results').style.display !== 'none') {
+                calculateAndVisualize();
+            }
+        }
+
         function calculateAndVisualize() {
+            const yrs = parseInt(document.getElementById('yrs').value);
+            const ytrRaw = parseInt(document.getElementById('ytr').value);
+            const ytr = Math.min(Math.max(isNaN(ytrRaw) ? 0 : ytrRaw, 0), yrs);
+            document.getElementById('ytr').value = ytr;
+
             // Get input values
             const params = {
                 bo: parseFloat(document.getElementById('bo').value),
                 bu: parseFloat(document.getElementById('bu').value),
                 ba: parseFloat(document.getElementById('ba').value),
-                yrs: parseInt(document.getElementById('yrs').value),
+                yrs: yrs,
+                ytr: ytr,
                 i1: parseFloat(document.getElementById('i1').value) / 100,
                 i2: parseFloat(document.getElementById('i2').value) / 100,
                 ip: parseFloat(document.getElementById('ip').value) / 100,
-                yg: parseFloat(document.getElementById('yg').value) / 100
+                yg: parseFloat(document.getElementById('yg').value) / 100,
+                ir: parseFloat(document.getElementById('ir').value) / 100,
+                sw: parseFloat(document.getElementById('sw').value) / 100,
+                rs: parseFloat(document.getElementById('rs').value)
             };
 
-            const rs = parseFloat(document.getElementById('rs').value);
-            const ir = parseFloat(document.getElementById('ir').value) / 100;
-            const sw = parseFloat(document.getElementById('sw').value) / 100;
+            const rs = params.rs;
+            const ir = params.ir;
+            const sw = params.sw;
 
-            // Calculate projections
-            const projections = calculator.balanceOverYears(params);
-            
+            // Run both withdrawal strategies; the selected one drives the table and main chart
+            const strategy = document.getElementById('ws').value;
+            const altStrategy = strategy === 'rule' ? 'pct' : 'rule';
+            const runs = {
+                rule: calculator.balanceOverYears(params, 'rule'),
+                pct: calculator.balanceOverYears(params, 'pct')
+            };
+            const selected = runs[strategy];
+            const alt = runs[altStrategy];
+            const projections = selected.rows;
+
             // Calculate required balances for each year
             const requiredBalances = [];
             for (let year = 1; year <= params.yrs; year++) {
@@ -624,38 +763,63 @@
                 requiredBalances.push(required);
             }
 
+            // Readiness check happens in the year retirement begins
+            const retReq = ytr >= 1 ? requiredBalances[ytr - 1] : calculator.calculateRequiredBalance(rs, ir, 0, sw);
+            const balanceAtRetirement = ytr >= 1 ? projections[ytr - 1].balance : Math.round(params.ba);
+
+            const swPct = +(sw * 100).toFixed(2);
+            const names = {
+                rule: swPct + '% Rule (Inflation-Adj.)',
+                pct: swPct + '% of Portfolio'
+            };
+
+            const ctx = { params, runs, selected, alt, strategy, altStrategy, names, swPct, rs, retReq, balanceAtRetirement };
+
             // Display results
-            displayResults(projections, requiredBalances, params.yrs);
-            
-            // Create visualization
-            createChart(projections, requiredBalances);
+            displayResults(projections, requiredBalances, ctx);
+
+            // Create visualizations
+            createChart(projections, requiredBalances, ctx);
+            createWithdrawalChart(ctx);
         }
 
-        function displayResults(projections, requiredBalances, totalYears) {
+        function displayResults(projections, requiredBalances, ctx) {
+            const { params, runs, names, retReq, balanceAtRetirement } = ctx;
             const resultsDiv = document.getElementById('results');
             const resultsGrid = document.getElementById('results-grid');
-            
+
             const finalProjection = projections[projections.length - 1];
-            const finalRequired = requiredBalances[requiredBalances.length - 1];
-            
-            resultsGrid.innerHTML = `
+            const retiresInHorizon = params.ytr < params.yrs;
+            const retLabel = params.ytr === 0 ? 'Today' : 'Year ' + params.ytr;
+            const surplus = balanceAtRetirement - retReq.target;
+
+            let cards = `
                 <div class="result-item">
                     <h4>Final Portfolio Balance</h4>
                     <div class="value">${finalProjection.balance.toLocaleString()}</div>
+                    <div class="sub">End of Year ${params.yrs} · ${names[ctx.strategy]}</div>
+                </div>
+                <div class="result-item">
+                    <h4>Balance at Retirement</h4>
+                    <div class="value">${balanceAtRetirement.toLocaleString()}</div>
+                    <div class="sub">${retLabel}</div>
                 </div>
                 <div class="result-item">
                     <h4>Required Balance (Target)</h4>
-                    <div class="value">${finalRequired.target.toLocaleString()}</div>
+                    <div class="value">${retReq.target.toLocaleString()}</div>
+                    <div class="sub">At retirement (${retLabel})</div>
                 </div>
                 <div class="result-item">
                     <h4>Surplus/Deficit</h4>
-                    <div class="value" style="color: ${finalProjection.balance >= finalRequired.target ? '#48bb78' : '#f56565'}">
-                        ${(finalProjection.balance - finalRequired.target).toLocaleString()}
+                    <div class="value" style="color: ${surplus >= 0 ? '#48bb78' : '#f56565'}">
+                        ${surplus.toLocaleString()}
                     </div>
+                    <div class="sub">At retirement</div>
                 </div>
                 <div class="result-item">
                     <h4>Inflation-Adjusted Salary</h4>
-                    <div class="value">${finalRequired.inflationAdjustedSalary.toLocaleString()}</div>
+                    <div class="value">${retReq.inflationAdjustedSalary.toLocaleString()}</div>
+                    <div class="sub">Required salary at retirement</div>
                 </div>
                 <div class="result-item">
                     <h4>Total Interest Growth</h4>
@@ -667,16 +831,50 @@
                 </div>
             `;
 
+            if (retiresInHorizon) {
+                ['rule', 'pct'].forEach(key => {
+                    const first = runs[key].rows.find(r => r.retireStart);
+                    cards += `
+                        <div class="result-item">
+                            <h4>Starting Salary: ${names[key]}</h4>
+                            <div class="value">${first.withdrawal.toLocaleString()}</div>
+                            <div class="sub">${first.monthlySalary.toLocaleString()}/month · first retirement year (Year ${params.ytr + 1})</div>
+                        </div>
+                    `;
+                });
+                ['rule', 'pct'].forEach(key => {
+                    const run = runs[key];
+                    const last = run.rows[run.rows.length - 1];
+                    const totalWithdrawn = run.rows.reduce((s, r) => s + r.withdrawal, 0);
+                    const note = run.depletedYear
+                        ? `Funds run out in Year ${run.depletedYear}`
+                        : `Final balance ${last.balance.toLocaleString()}`;
+                    cards += `
+                        <div class="result-item">
+                            <h4>Final-Year Salary: ${names[key]}</h4>
+                            <div class="value">${last.withdrawal.toLocaleString()}</div>
+                            <div class="sub">${note} · Total withdrawn ${fmtN(totalWithdrawn)}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            resultsGrid.innerHTML = cards;
+
             // Create detailed breakdown table
-            createYearlyBreakdownTable(projections, requiredBalances);
+            createYearlyBreakdownTable(projections, requiredBalances, ctx);
 
             resultsDiv.style.display = 'block';
         }
 
-        function createYearlyBreakdownTable(projections, requiredBalances) {
+        function createYearlyBreakdownTable(projections, requiredBalances, ctx) {
             const container = document.getElementById('yearly-breakdown');
-            
+            const { names, strategy } = ctx;
+            const ruleActive = strategy === 'rule' ? ' class="active-col"' : '';
+            const pctActive = strategy === 'pct' ? ' class="active-col"' : '';
+
             let tableHTML = `
+                <div class="table-scroll">
                 <table class="breakdown-table">
                     <thead>
                         <tr>
@@ -687,6 +885,9 @@
                             <th>Interest Growth</th>
                             <th>Monthly Interest Growth</th>
                             <th>Life Events</th>
+                            <th class="active-col">Monthly Salary</th>
+                            <th${ruleActive}>Annual Salary: ${names.rule}</th>
+                            <th${pctActive}>Annual Salary: ${names.pct}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -695,28 +896,43 @@
             projections.forEach((projection, index) => {
                 const required = requiredBalances[index];
                 let lifeEventsHTML = '';
-                
-                if (projection.balanceHit) {
-                    const hitClass = projection.balanceHit.amount >= 0 ? 'positive-hit' : 'negative-hit';
-                    const sign = projection.balanceHit.amount >= 0 ? '+' : '';
-                    lifeEventsHTML += `<div class="hit-indicator balance-hit ${hitClass}">Balance: ${sign}${projection.balanceHit.amount.toLocaleString()}</div>`;
-                }
-                
-                if (projection.savingsHit) {
-                    const hitClass = projection.savingsHit.amount >= 0 ? 'positive-hit' : 'negative-hit';
-                    const sign = projection.savingsHit.amount >= 0 ? '+' : '';
-                    lifeEventsHTML += `<div class="hit-indicator savings-hit ${hitClass}">Monthly: ${sign}${projection.savingsHit.amount.toLocaleString()}</div>`;
+
+                projection.balanceHits.forEach(hit => {
+                    const hitClass = hit.amount >= 0 ? 'positive-hit' : 'negative-hit';
+                    const sign = hit.amount >= 0 ? '+' : '';
+                    lifeEventsHTML += `<div class="hit-indicator balance-hit ${hitClass}">Balance: ${sign}${hit.amount.toLocaleString()}</div>`;
+                });
+
+                projection.savingsHits.forEach(hit => {
+                    const hitClass = hit.amount >= 0 ? 'positive-hit' : 'negative-hit';
+                    const sign = hit.amount >= 0 ? '+' : '';
+                    lifeEventsHTML += `<div class="hit-indicator savings-hit ${hitClass}">Monthly: ${sign}${hit.amount.toLocaleString()}</div>`;
+                });
+
+                if (projection.depleted) {
+                    lifeEventsHTML += `<div class="hit-indicator negative-hit">Funds depleted</div>`;
                 }
 
+                const rowClass = projection.retired
+                    ? (projection.retireStart ? 'retired-row retire-start' : 'retired-row')
+                    : '';
+                const retireBadge = projection.retireStart
+                    ? '<span class="hit-indicator retire-badge">Retired</span>'
+                    : '';
+                const dash = '-';
+
                 tableHTML += `
-                    <tr>
-                        <td>Year ${projection.year}</td>
+                    <tr class="${rowClass}">
+                        <td>Year ${projection.year}${retireBadge}</td>
                         <td>${projection.balance.toLocaleString()}</td>
                         <td>${projection.yearlyContribution.toLocaleString()}</td>
                         <td>${projection.monthlyContribution.toLocaleString()}</td>
                         <td>${projection.interestGrowth.toLocaleString()}</td>
                         <td>${projection.monthlyInterestGrowth.toLocaleString()}</td>
                         <td>${lifeEventsHTML || '-'}</td>
+                        <td class="active-col">${projection.retired ? projection.monthlySalary.toLocaleString() : dash}</td>
+                        <td${ruleActive}>${projection.retired ? projection.ruleSalary.toLocaleString() : dash}</td>
+                        <td${pctActive}>${projection.retired ? projection.pctSalary.toLocaleString() : dash}</td>
                     </tr>
                 `;
             });
@@ -724,6 +940,8 @@
             tableHTML += `
                     </tbody>
                 </table>
+                </div>
+                <p class="field-hint">Withdrawals are taken at the start of each retirement year and paid out monthly. Both annual salary columns are computed along the selected strategy's portfolio path; the highlighted column is the one actually withdrawn.</p>
             `;
 
             container.innerHTML = tableHTML;
@@ -745,32 +963,71 @@
             }
         }
 
-        function createChart(projections, requiredBalances) {
-            const ctx = document.getElementById('mainChart').getContext('2d');
-            
+        function createChart(projections, requiredBalances, ctx) {
+            const canvasCtx = document.getElementById('mainChart').getContext('2d');
+
             if (calculator.chart) {
                 calculator.chart.destroy();
             }
 
             const years = projections.map(p => p.year);
             const balances = projections.map(p => p.balance);
+            const altBalances = ctx.alt.rows.map(p => p.balance);
             const requiredTarget = requiredBalances.map(r => r.target);
             const requiredLow = requiredBalances.map(r => r.low);
             const requiredHigh = requiredBalances.map(r => r.high);
 
-            calculator.chart = new Chart(ctx, {
+            // Vertical dashed line marking where retirement begins
+            const retirementLine = {
+                id: 'retirementLine',
+                afterDatasetsDraw(chart, args, opts) {
+                    if (!opts || opts.index === undefined || opts.index === null || opts.index < 0) return;
+                    const x = chart.scales.x.getPixelForValue(opts.index);
+                    const area = chart.chartArea;
+                    const c = chart.ctx;
+                    c.save();
+                    c.strokeStyle = '#718096';
+                    c.fillStyle = '#4a5568';
+                    c.lineWidth = 2;
+                    c.setLineDash([6, 4]);
+                    c.beginPath();
+                    c.moveTo(x, area.top);
+                    c.lineTo(x, area.bottom);
+                    c.stroke();
+                    c.setLineDash([]);
+                    c.font = 'bold 12px sans-serif';
+                    c.textAlign = 'left';
+                    c.fillText('Retirement begins', x + 6, area.top + 14);
+                    c.restore();
+                }
+            };
+
+            const showLine = ctx.params.ytr >= 1 && ctx.params.ytr < ctx.params.yrs;
+
+            calculator.chart = new Chart(canvasCtx, {
                 type: 'line',
                 data: {
                     labels: years,
                     datasets: [
                         {
-                            label: 'Portfolio Balance',
+                            label: 'Portfolio Balance (' + ctx.names[ctx.strategy] + ')',
                             data: balances,
                             borderColor: '#0D3068',
                             backgroundColor: 'rgba(102, 126, 234, 0.1)',
                             borderWidth: 3,
                             tension: 0.4,
                             fill: true
+                        },
+                        {
+                            label: 'Portfolio Balance (' + ctx.names[ctx.altStrategy] + ')',
+                            data: altBalances,
+                            borderColor: '#805ad5',
+                            backgroundColor: 'rgba(128, 90, 213, 0.05)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            borderDash: [2, 3],
+                            pointRadius: 0,
+                            hidden: !ctx.params.ytr || ctx.params.ytr >= ctx.params.yrs
                         },
                         {
                             label: 'Required Balance (Target)',
@@ -801,10 +1058,14 @@
                         }
                     ]
                 },
+                plugins: [retirementLine],
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
+                        retirementLine: {
+                            index: showLine ? ctx.params.ytr - 1 : -1
+                        },
                         title: {
                             display: true,
                             text: 'Portfolio Growth vs Required Balance Over Time',
@@ -832,6 +1093,132 @@
                             title: {
                                 display: true,
                                 text: 'Balance ($)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Years'
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            });
+        }
+
+        function createWithdrawalChart(ctx) {
+            const panel = document.getElementById('withdrawal-panel');
+            const canvasCtx = document.getElementById('withdrawalChart').getContext('2d');
+
+            if (calculator.chart2) {
+                calculator.chart2.destroy();
+                calculator.chart2 = null;
+            }
+
+            const { params, runs, names, rs } = ctx;
+            if (params.ytr >= params.yrs) {
+                // No retirement years inside the planning horizon
+                panel.style.display = 'none';
+                return;
+            }
+            panel.style.display = 'block';
+
+            const ruleRows = runs.rule.rows.filter(r => r.retired);
+            const pctRows = runs.pct.rows.filter(r => r.retired);
+            const labels = ruleRows.map(r => r.year);
+            const ruleData = ruleRows.map(r => r.withdrawal);
+            const pctData = pctRows.map(r => r.withdrawal);
+            const diffData = pctData.map((v, i) => v - ruleData[i]);
+
+            calculator.chart2 = new Chart(canvasCtx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: names.rule,
+                            data: ruleData,
+                            borderColor: '#0D3068',
+                            backgroundColor: 'rgba(13, 48, 104, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            order: 1
+                        },
+                        {
+                            label: names.pct,
+                            data: pctData,
+                            borderColor: '#0092FF',
+                            backgroundColor: 'rgba(0, 146, 255, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            order: 1
+                        },
+                        {
+                            type: 'bar',
+                            label: 'Difference (% of Portfolio minus Rule)',
+                            data: diffData,
+                            backgroundColor: diffData.map(v => v >= 0 ? 'rgba(56, 161, 105, 0.35)' : 'rgba(229, 62, 62, 0.35)'),
+                            yAxisID: 'y1',
+                            order: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Annual Retirement Salary by Withdrawal Strategy',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(item) {
+                                    return item.dataset.label + ': $' + Math.round(item.parsed.y).toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + Math.round(value / 1000).toLocaleString() + 'K';
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Annual Salary ($)'
+                            }
+                        },
+                        y1: {
+                            position: 'right',
+                            beginAtZero: true,
+                            grid: { drawOnChartArea: false },
+                            ticks: {
+                                callback: function(value) {
+                                    return (value < 0 ? '-' : '') + '$' + Math.round(Math.abs(value) / 1000).toLocaleString() + 'K';
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Difference ($)'
                             }
                         },
                         x: {
