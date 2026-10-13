@@ -342,6 +342,141 @@
             color: #0D3068;
             border: 1px solid #90cdf4;
         }
+
+        /* ---------- Mobile / responsive layout ---------- */
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* Let grid children shrink below their content width so one wide child
+           (like the hit input rows) can't stretch the whole page */
+        .main-content > *,
+        .results-grid > *,
+        .hit-inputs > * {
+            min-width: 0;
+        }
+
+        .hits-container {
+            overflow: hidden;
+        }
+
+        .hit-item span {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .results-grid {
+            grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+        }
+
+        .chart-container {
+            width: 100%;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .chart-container canvas {
+            max-width: 100%;
+        }
+
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 12px;
+            }
+
+            .header {
+                margin-bottom: 24px;
+            }
+
+            .header h1 {
+                font-size: 1.6em;
+            }
+
+            .panel,
+            .results {
+                padding: 16px;
+                border-radius: 12px;
+            }
+
+            .panel h2 {
+                font-size: 1.2em;
+            }
+
+            /* 16px inputs stop iOS Safari from zooming in on focus */
+            .input-group input,
+            .input-group select,
+            .hit-inputs input {
+                font-size: 16px;
+            }
+
+            .hit-inputs {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .hit-inputs input[type="text"],
+            .hit-inputs .btn {
+                grid-column: 1 / -1;
+            }
+
+            .hit-inputs .btn {
+                margin: 0;
+            }
+
+            .hit-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .hit-item .btn {
+                margin: 0;
+            }
+
+            .btn {
+                padding: 12px 18px;
+            }
+
+            .panel > .btn {
+                width: 100%;
+                margin: 0;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .result-item .value {
+                font-size: 1.3em;
+            }
+
+            .toggle-btn {
+                width: 100%;
+                justify-content: center;
+                margin: 0 0 20px;
+            }
+
+            .table-scroll .breakdown-table {
+                min-width: 1000px;
+            }
+
+            .breakdown-table th,
+            .breakdown-table td {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+        }
     </style>
 </head>
 <body>
